@@ -1,39 +1,43 @@
+/**
+ * @file linked_list.c
+ * @author Paweł Rubin
+ * @brief 
+ * @version 0.1
+ * @date 2019-02-23
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
+#include "linked_list.h"
 #include <stdlib.h>
 #include <stdio.h>
-#define TRUE 1
+#define TRUE 1 
 #define FALSE 0
-
-typedef struct Node Node;
-typedef struct Linked_list Linked_list;
-
-struct Node {
-  int value;
-  Node *next;
-};
 
 Node new_node() {
   Node node = {NULL};
   return node;
 }
 
-struct Linked_list {
-  Node *head;
-  
-  void (*insert)(Linked_list *, int value);
-  void (*delete)(Linked_list *, int value);
-  int (*is_empty)(Linked_list *);
-  int (*findMTF)(Linked_list *, int value);
-  int (*findTRANS)(Linked_list *, int value);
-};
+Linked_list new_singly_linked_list() {
+  Linked_list list = {NULL};
+  list.insert = insert_singly;
+  list.delete = delete_singly;
+  list.is_empty = is_empty;
+  list.findMTF = findMTF_singly;
+  list.findTRANS = findTRANS_singly;
 
-void insert(Linked_list *list, int value) {
+  return list;
+}
+
+void insert_singly(Linked_list *list, int value) {
   Node *to_insert = malloc(sizeof(Node));
   to_insert->value = value;
   to_insert->next = list->head;
   list->head = to_insert;
 }
 
-void delete(Linked_list *list, int value) {
+void delete_singly(Linked_list *list, int value) {
   Node *current = list->head;
 
   if (current->value == value) {
@@ -53,7 +57,7 @@ int is_empty(Linked_list *list) {
   return (list->head == NULL);
 }
 
-int findMTF(Linked_list *list, int value) {
+int findMTF_singly(Linked_list *list, int value) {
   Node *current = list->head;
 
   if (current->value == value) {
@@ -73,8 +77,14 @@ int findMTF(Linked_list *list, int value) {
 
   return FALSE;
 }
-
-int findTRANS(Linked_list *list, int value) {
+/**
+ * @brief 
+ * 
+ * @param list 
+ * @param value 
+ * @return int 
+ */
+int findTRANS_singly(Linked_list *list, int value) {
   Node *current = list->head;
 
   if (current->value == value) {
@@ -104,16 +114,6 @@ int findTRANS(Linked_list *list, int value) {
   return FALSE;
 }
 
-Linked_list new_singly_linked_list() {
-  Linked_list list = {NULL};
-  list.insert = insert;
-  list.delete = delete;
-  list.is_empty = is_empty;
-  list.findMTF = findMTF;
-  list.findTRANS = findTRANS;
-
-  return list;
-}
 
 void print_list(Linked_list list) {
     Node *current = list.head;
@@ -126,20 +126,3 @@ void print_list(Linked_list list) {
     printf("\n");
 }
 
-int main(void) {
-    Linked_list list = new_singly_linked_list();
-
-    list.insert(&list, 7);
-    list.insert(&list, 3);
-    list.insert(&list, 1);
-    list.insert(&list, 2);
-    list.insert(&list, 2137);
-
-    print_list(list);
-    list.findTRANS(&list, 2);
-    print_list(list);
-    list.delete(&list, 2137);
-    print_list(list);
-
-    return 0;
-}
