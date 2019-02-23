@@ -100,7 +100,7 @@ int findTRANS_singly(Linked_list *list, int value);
 /**
  * @brief Prints the list.
  * 
- * @param list A Linked_list ot be printed.
+ * @param list A Linked_list to be printed.
  */
 void print_list(Linked_list list);
 
