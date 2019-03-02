@@ -10,6 +10,9 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
+#define TRUE 1 
+#define FALSE 0
+
 typedef struct Node Node;
 typedef struct Linked_list Linked_list;
 
@@ -31,10 +34,9 @@ struct Linked_list {
   Node *head;   /**< A pointer to the head node of the list.*/
   
   void (*insert)(Linked_list *, int value);     /**< A pointer to insert method*/
-  void (*delete)(Linked_list *, int value);     /**< A pointer to delete method*/
+  int (*delete)(Linked_list *, int value);     /**< A pointer to delete method*/
   int (*findMTF)(Linked_list *, int value);     /**< A pointer to findMTF method*/
   int (*findTRANS)(Linked_list *, int value);   /**< A pointer to findTRANS method*/
-  int (*is_empty)(Linked_list *);               /**< A pointer to is_empty method*/
 };
 
 /**
@@ -58,7 +60,7 @@ Linked_list new_singly_linked_list();
 /**
  * @brief Insert operation implementation for singly Linked_list.
  * 
- * @param list A pointer to this list.
+ * @param list A pointer to the list.
  * @param value A value to be inserted.
  */
 void insert_singly(Linked_list *list, int value);
@@ -66,15 +68,16 @@ void insert_singly(Linked_list *list, int value);
 /**
  * @brief Delete operation implementation for singly Linked_list.
  * 
- * @param list A pointer to this list.
+ * @param list A pointer to the list.
  * @param value A value to be deleted
+ * @return Number of comparisons. 
  */
-void delete_singly(Linked_list *list, int value);
+int delete_singly(Linked_list *list, int value);
 
 /**
  * @brief Checks whether the list is empty
  * 
- * @param list A pointer to this list. 
+ * @param list A pointer to the list. 
  * @return int 1 for empty list, 0 otherwise.
  */
 int is_empty(Linked_list *list);
@@ -82,18 +85,18 @@ int is_empty(Linked_list *list);
 /**
  * @brief Dr. Gębala's findMTF function implementation for singly Linked_list
  * 
- * @param list A pointer to this list.  
+ * @param list A pointer to the list.  
  * @param value A value to found.
- * @return int 1 for succes, 0 otherwise.
+ * @return Number of comparisons.
  */
 int findMTF_singly(Linked_list *list, int value);
 
 /**
  * @brief Dr. Gębala's findTRANS function implementation for singly Linked_list
  * 
- * @param list A pointer to this list.  
+ * @param list A pointer to the list.  
  * @param value A value to found.
- * @return int 1 for succes, 0 otherwise.
+ * @return Number of comparisons.
  */
 int findTRANS_singly(Linked_list *list, int value);
 

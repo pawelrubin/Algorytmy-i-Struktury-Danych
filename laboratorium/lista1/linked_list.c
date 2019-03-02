@@ -11,11 +11,11 @@
 #include "linked_list.h"
 #include <stdlib.h>
 #include <stdio.h>
-#define TRUE 1 
-#define FALSE 0
 
 Node new_node() {
-  Node node = {NULL};
+  Node node;
+  node.next = NULL;
+  node.prev = NULL;
   return node;
 }
 
@@ -23,10 +23,8 @@ Linked_list new_singly_linked_list() {
   Linked_list list = {NULL};
   list.insert = insert_singly;
   list.delete = delete_singly;
-  list.is_empty = is_empty;
   list.findMTF = findMTF_singly;
   list.findTRANS = findTRANS_singly;
-
   return list;
 }
 
@@ -37,92 +35,117 @@ void insert_singly(Linked_list *list, int value) {
   list->head = to_insert;
 }
 
-void delete_singly(Linked_list *list, int value) {
+int delete_singly(Linked_list *list, int value) {
   Node *current = list->head;
+  int counter = 2;
 
-  if (current->value == value) {
-    list->head = current->next;
+  if (current != NULL) {
+    if (current->value == value) {
+      list->head = current->next;
+      free(current);
+      return counter;
+    }
   }
 
   while (current->next != NULL) {
+    counter += 2;
     if (current->next->value == value) {
-        current->next = current->next->next;
-        return;
+      Node *to_delete = current->next;
+      current->next = current->next->next;
+      free(to_delete);
+      break;
     }
     current = current->next;
   }
+
+  return counter;
 }
 
 int is_empty(Linked_list *list) {
   return (list->head == NULL);
+  // if (list->head == NULL) {
+  //   return TRUE;
+  // } else {
+  //   return FALSE;
+  // }
 }
 
 int findMTF_singly(Linked_list *list, int value) {
   Node *current = list->head;
+  int counter = 2;
 
-  if (current->value == value) {
-    return TRUE;
+  if (current != NULL) {
+    if (current->value == value) {
+      return 2;
+    }
+  } else {
+    return 1;
   }
 
   while (current->next != NULL) {
+    counter += 2;
     if (current->next->value == value) {
       Node *old_head = list->head;
       list->head = current->next;
       current->next = current->next->next;
       list->head->next = old_head;
-      return TRUE;
+      break;
     }
     current = current->next;
   }
 
-  return FALSE;
+  return counter;
 }
-/**
- * @brief 
- * 
- * @param list 
- * @param value 
- * @return int 
- */
+
 int findTRANS_singly(Linked_list *list, int value) {
   Node *current = list->head;
+  int counter = 3;
 
-  if (current->value == value) {
-    return TRUE;
+  if (current != NULL) {
+    if (current->value == value) {
+      return 2;
+    }
+  } else {
+    return 1;
   }
 
-  if (current->next->value == value) {
-    Node *old_head = list->head;
-    list->head = current->next;
-    current->next = current->next->next;
-    list->head->next = old_head;
-    return TRUE;
+  if (current->next != NULL) {
+    if (current->next->value == value) {
+      Node *old_head = list->head;
+      list->head = current->next;
+      current->next = current->next->next;
+      list->head->next = old_head;
+      return 4;
+    }
+  } else {
+    return 3;
   }
 
   while (current->next->next != NULL) {
+    counter += 2;
     if (current->next->next->value == value) {
       Node *next = current->next->next->next;
       Node *found = current->next->next;
       current->next->next->next = current->next;
       current->next->next = next;
       current->next = found;
-      return TRUE;
+      break;
     }
     current = current->next;
   }
 
-  return FALSE;
+  return counter;
 }
 
 
 void print_list(Linked_list list) {
-    Node *current = list.head;
+  Node *current = list.head;
 
-    while (current != NULL) {
-        printf("%d, ", current->value);
-        current = current->next;
-    }
+  while (current != NULL) {
+    printf("%d -> ", current->value);
+    current = current->next;
+  }
 
-    printf("\n");
+  printf("NULL\n");
 }
 
