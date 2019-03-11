@@ -13,9 +13,11 @@
 #include <stdio.h>
 
 Node new_node() {
-  Node node;
-  node.next = NULL;
-  node.prev = NULL;
+  Node node = {
+    0,
+    NULL,
+    NULL
+  };
   return node;
 }
 

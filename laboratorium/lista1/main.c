@@ -46,7 +46,7 @@ int main(void) {
     TRANSsum += list.delete(&list2, i);
   }
   printf("MTF  : %f\n", (double)MTFsum / (SIZE*SIZE));
-  printf("TRANS: %f\n", (double)TRANSsum/ (SIZE*SIZE));
+  printf("TRANS: %f\n", (double)TRANSsum / (SIZE*SIZE));
 
   return 0;
 }
