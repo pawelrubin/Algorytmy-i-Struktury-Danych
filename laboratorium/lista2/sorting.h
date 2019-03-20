@@ -16,6 +16,7 @@
 #define INSERTION 1
 #define HEAP 2
 #define QUICK 3
+#define MQUICK 4
 
 typedef struct Stats {
   int size_n;
@@ -40,12 +41,14 @@ Settings* init_settings();
 
 Data* init_data(size_t n);
 
-Stats insertion_sort(int** array, size_t size);
+Stats* insertion_sort(int* array, size_t size);
 
-Stats select_sort(int** array, size_t size);
+Stats* select_sort(int* array, size_t size);
 
-Stats heap_sort(int** array, size_t size);
+Stats* heap_sort(int* array, size_t size);
 
-Stats quick_sort(int** array, size_t size);
+Stats* quick_sort(int* array, size_t size);
+
+Stats* mquick_sort(int* array, size_t size);
 
 #endif 

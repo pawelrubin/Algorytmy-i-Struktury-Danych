@@ -56,6 +56,8 @@ Settings* get_settings(int argc, char** argv) {
           settings->type = HEAP;
         } else if (strcmp(optarg, "quick") == 0) {
           settings->type = QUICK;
+        } else if (strcmp(optarg, "mquick") == 0) {
+          settings->type = MQUICK;
         } else {
           printf("Uknown type.\n");
           exit(EXIT_FAILURE);
@@ -86,16 +88,16 @@ int main(int argc, char** argv) {
   debug(settings, data);
   switch (settings->type) {
     case SELECT:
-      select_sort(data->array, data->n);
+      // select_sort(data->array, data->n);
       break;
     case INSERTION:
-      select_sort(data->array, data->n);
+      // insertion_sort(data->array, data->n);
       break;
     case HEAP:
-      select_sort(data->array, data->n);
+      // heap_sort(data->array, data->n);
       break;
     case QUICK:
-      select_sort(data->array, data->n);
+      // quick_sort(data->array, data->n);
       break;
   }
   return 0;
