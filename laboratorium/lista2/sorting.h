@@ -18,13 +18,6 @@
 #define QUICK 3
 #define MQUICK 4
 
-typedef struct Stats {
-  int size_n;
-  int cmp_count;
-  int shift_count;
-  float time;
-} Stats;
-
 typedef struct Settings {
   int asc_flag;
   int k;
@@ -37,9 +30,28 @@ typedef struct Data {
   int* array;
 } Data;
 
+typedef struct Stats {
+  int size_n;
+  int cmp_count;
+  int shift_count;
+  float time;
+} Stats;
+
+void swap(int* a, int* b);
+
 Settings* init_settings();
 
+Settings* get_settings(int argc, char** argv);
+
 Data* init_data(size_t n);
+
+Data* get_data();
+
+void debug(Settings* settings, Data* data);
+
+void print_array(int* array, size_t size);
+
+int* find_min(int* array, size_t size);
 
 Stats* insertion_sort(int* array, size_t size);
 
