@@ -18,11 +18,27 @@
 #define QUICK 3
 
 typedef struct Stats {
-    int size_n;
-    int cmp_count;
-    int shift_count;
-    float time;
+  int size_n;
+  int cmp_count;
+  int shift_count;
+  float time;
 } Stats;
+
+typedef struct Settings {
+  int asc_flag;
+  int k;
+  int type;
+  char* file_name;
+} Settings;
+
+typedef struct Data {
+  size_t n;
+  int* array;
+} Data;
+
+Settings* init_settings();
+
+Data* init_data(size_t n);
 
 Stats insertion_sort(int** array, size_t size);
 
