@@ -150,4 +150,3 @@ void print_list(Linked_list list) {
 
   printf("NULL\n");
 }
-

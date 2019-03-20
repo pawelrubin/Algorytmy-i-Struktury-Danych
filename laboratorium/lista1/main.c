@@ -28,6 +28,7 @@ int main(void) {
   Linked_list list = new_singly_linked_list();
   fill_random(&list, SIZE);
   int MTFsum = 0;
+  
   for (int i = SIZE; i > 0; i--) {
     for (int j = 1; j <= SIZE; j++) {
       MTFsum += list.findMTF(&list, j);
@@ -39,7 +40,7 @@ int main(void) {
   Linked_list list2 = new_singly_linked_list();
   fill_random(&list2, SIZE);
   int TRANSsum = 0;
-   for (int i = SIZE; i > 0; i--) {
+  for (int i = SIZE; i > 0; i--) {
     for (int j = 1; j <= SIZE; j++) {
       TRANSsum += list2.findTRANS(&list2, j);
     }
