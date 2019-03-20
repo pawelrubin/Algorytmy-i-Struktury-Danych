@@ -18,10 +18,10 @@ int main(int argc, char** argv) {
   debug(settings, data);
   switch (settings->type) {
     case SELECT:
-      select_sort(data->array, data->n);
+      select_sort(data->array, data->n, settings->asc_flag);
       break;
     case INSERTION:
-      // insertion_sort(data->array, data->n);
+      insertion_sort(data->array, data->n, settings->asc_flag);
       break;
     case HEAP:
       // heap_sort(data->array, data->n);
@@ -30,5 +30,6 @@ int main(int argc, char** argv) {
       // quick_sort(data->array, data->n);
       break;
   }
+  debug(settings, data);
   return 0;
 }

@@ -12,6 +12,9 @@
 
 #include <stdlib.h>
 
+#define TRUE 1
+#define FALSE 0
+
 #define SELECT 0
 #define INSERTION 1
 #define HEAP 2
@@ -53,14 +56,20 @@ void print_array(int* array, size_t size);
 
 int* find_min(int* array, size_t size);
 
-Stats* insertion_sort(int* array, size_t size);
+int* find_max(int* array, size_t size);
 
-Stats* select_sort(int* array, size_t size);
+Stats* insertion_sort(int* array, size_t size, int asc_flag);
+Stats* insertion_sort_asc(int* array, size_t size);
+Stats* insertion_sort_desc(int* array, size_t size);
 
-Stats* heap_sort(int* array, size_t size);
+Stats* select_sort(int* array, size_t size, int asc_flag);
+Stats* select_sort_asc(int* array, size_t size);
+Stats* select_sort_desc(int* array, size_t size);
 
-Stats* quick_sort(int* array, size_t size);
+Stats* heap_sort(int* array, size_t size, int asc_flag);
 
-Stats* mquick_sort(int* array, size_t size);
+Stats* quick_sort(int* array, size_t size, int asc_flag);
+
+Stats* mquick_sort(int* array, size_t size, int asc_flag);
 
 #endif 

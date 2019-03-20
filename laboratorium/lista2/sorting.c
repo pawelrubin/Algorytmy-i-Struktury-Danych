@@ -12,11 +12,9 @@
 #include <getopt.h>
 #include <string.h>
 
-
-
 Settings* init_settings() {
   Settings* settings = malloc(sizeof(Settings));
-  settings->asc_flag = -1;
+  settings->asc_flag = TRUE;
   settings->type = -1;
   settings->k = -1;
   settings->file_name = NULL;
@@ -111,13 +109,59 @@ Data* get_data() {
   return data;
 }
 
-Stats* select_sort(int* array, size_t size) {
-  print_array(array, size);
+Stats* select_sort(int* array, size_t size, int asc_flag) {
+  if (asc_flag) {
+    return select_sort_asc(array, size);
+  } else {
+    return select_sort_desc(array, size);
+  }
+}
+
+Stats* select_sort_asc(int* array, size_t size) {
   Stats* stats = malloc(sizeof(Stats));
   for (int i = 0; i < size; i++) {
     swap(&array[i], find_min(array + i, size - i));
   }
-  print_array(array, size);
+  return stats;
+}
+
+Stats* select_sort_desc(int* array, size_t size) {
+  Stats* stats = malloc(sizeof(Stats));
+  for (int i = 0; i < size; i++) {
+    swap(&array[i], find_max(array + i, size - i));
+  }
+  return stats;
+}
+
+Stats* insertion_sort(int* array, size_t size, int asc_flag) {
+  if (asc_flag) {
+    return insertion_sort_asc(array, size);
+  } else {
+    return insertion_sort_desc(array, size);
+  }
+}
+
+Stats* insertion_sort_asc(int* array, size_t size) {
+  Stats* stats = malloc(sizeof(Stats));
+  for (int i = 0; i < size; i++) {
+    int j = i;
+    while (j > 0 && array[j-1] > array[j]) {
+      swap(&array[j], &array[j-1]);
+      j--;
+    }
+  }
+  return stats;
+}
+
+Stats* insertion_sort_desc(int* array, size_t size) {
+  Stats* stats = malloc(sizeof(Stats));
+  for (int i = 0; i < size; i++) {
+    int j = i;
+    while (j > 0 && array[j-1] < array[j]) {
+      swap(&array[j], &array[j-1]);
+      j--;
+    }
+  }
   return stats;
 }
 
@@ -129,6 +173,16 @@ int* find_min(int* array, size_t size) {
     }
   }
   return min;
+}
+
+int* find_max(int* array, size_t size) {
+  int* max = array;
+  for (int i = 1; i < size; i++) {
+    if (array[i] > *max) {
+      max = &array[i];
+    }
+  }
+  return max;
 }
 
 void swap(int* a, int* b) {
