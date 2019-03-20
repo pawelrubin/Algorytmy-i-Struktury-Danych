@@ -12,24 +12,31 @@
 #include <string.h>
 #include "sorting.h"
 
-int asc_flag = -1;
-int k = -1;
-int type = -1;
-char* file_name;
+void debug(Settings* settings, Data* data) {
+  printf("Settings (If unset, value = -1 or NULL):\n");
+  printf("  asc_flag: %d\n", settings->asc_flag);
+  printf("  type: %d\n", settings->type);
+  printf("  k: %d\n", settings->k);
+  printf("  file_name: %s\n", settings->file_name);
 
-void debug() {
-  printf("If unset, value = -1\n");
-  printf("  asc_flag: %d\n", asc_flag);
-  printf("  type: %d\n", type);
-  printf("  k: %d\n", k);
-  printf("  file_name: %s\n", file_name);
+  printf("Data (If unset, value = -1 or NULL):\n");
+  printf("  n: %d\n", data->n);
+  printf("  array: [");
+  for (int i = 0; i < data->n; i++) {
+    printf("%d", data->array[i]);
+    if (i < data->n-1) {
+      printf(", ");
+    }
+  }
+  printf("]\n");
 }
 
-void handle_options(int argc, char** argv) {
+Settings* get_settings(int argc, char** argv) {
+  Settings *settings = init_settings();
   int c, option_index, this_option_optind;
   struct option long_options[] = {
-    {"asc", no_argument, &asc_flag, 1},
-    {"desc", no_argument, &asc_flag, 0},
+    {"asc", no_argument, &settings->asc_flag, 1},
+    {"desc", no_argument, &settings->asc_flag, 0},
     {"type", required_argument, 0, 't'},
     {"stat", required_argument, 0, 's'},
     {0, 0, 0, 0}
@@ -42,31 +49,54 @@ void handle_options(int argc, char** argv) {
     switch (c) {
       case 't':
         if (strcmp(optarg, "select") == 0) {
-          type = SELECT;
+          settings->type = SELECT;
         } else if (strcmp(optarg, "insertion") == 0) {
-          type = INSERTION;
+          settings->type = INSERTION;
         } else if (strcmp(optarg, "heap") == 0) {
-          type = HEAP;
+          settings->type = HEAP;
         } else if (strcmp(optarg, "quick") == 0) {
-          type = QUICK;
+          settings->type = QUICK;
         } else {
           printf("Uknown type.\n");
           exit(EXIT_FAILURE);
         }
         break;
       case 's':
-        file_name = strdup(argv[optind - 1]);
-        k = atoi(strdup(argv[optind]));
-        break;
-      default:
+        settings->file_name = strdup(argv[optind - 1]);
+        settings->k = atoi(strdup(argv[optind]));
         break;
     }
   }
-  debug();
+  return settings;
 } 
 
+Data* get_data() {
+  size_t n;
+  scanf("%d", &n);
+  Data* data = init_data(n);
+  for (int i = 0; i < n; i++) {
+    scanf("%d", &data->array[i]);
+  }
+  return data;
+}
+
 int main(int argc, char** argv) {
-  handle_options(argc, argv);
-  
+  Settings* settings = get_settings(argc, argv);
+  Data* data = get_data();
+  debug(settings, data);
+  switch (settings->type) {
+    case SELECT:
+      select_sort(data->array, data->n);
+      break;
+    case INSERTION:
+      select_sort(data->array, data->n);
+      break;
+    case HEAP:
+      select_sort(data->array, data->n);
+      break;
+    case QUICK:
+      select_sort(data->array, data->n);
+      break;
+  }
   return 0;
 }
