@@ -22,8 +22,11 @@ Stats* heap_sort_asc(int* array, size_t size);
 Stats* heap_sort_desc(int* array, size_t size);
 Stats* quick_sort_asc(int* array, int low, int high);
 Stats* quick_sort_desc(int* array, int low, int high);
+Stats* mquick_sort_asc(int* array, int loq, int high);
+Stats* mquick_sort_desc(int* array, int loq, int high);
 int partition_asc(int* array, int low, int high);
 int partition_desc(int* array, int low, int high);
+Stats* merge_stats(Stats* s1, Stats* s2);
 
 Stats* select_sort(int* array, size_t size, int asc_flag) {
   if (asc_flag) {
@@ -54,6 +57,14 @@ Stats* quick_sort(int* array, size_t size, int asc_flag) {
     return quick_sort_asc(array, 0, size - 1);
   } else {
     return quick_sort_desc(array, 0, size - 1);
+  }
+}
+
+Stats* mquick_sort(int* array, size_t size, int asc_flag) {
+  if (asc_flag) {
+    return mquick_sort_asc(array, 0, size - 1);
+  } else {
+    return mquick_sort_desc(array, 0, size - 1);
   }
 }
 
@@ -163,4 +174,35 @@ int partition_desc(int* array, int low, int high) {
   }
   swap(&array[i + 1], &array[high]);
   return (i + 1);
+}
+
+Stats* mquick_sort_asc(int* array, int low, int high) {
+  Stats* stats = malloc(sizeof(Stats));  
+  if (low < high) {
+    if (high <= 16) return merge_stats(stats, insertion_sort_asc(array, high + 1));
+    int partition_index = partition_asc(array, low, high);
+    quick_sort_asc(array, low, partition_index - 1);
+    quick_sort_asc(array, partition_index + 1, high);
+  }
+  return stats;
+}
+
+Stats* mquick_sort_desc(int* array, int low, int high) {
+  Stats* stats = malloc(sizeof(Stats));  
+  if (low < high) {
+    if (high <= 17) return merge_stats(stats, insertion_sort_desc(array, high + 1));
+    int partition_index = partition_desc(array, low, high);
+    quick_sort_asc(array, low, partition_index - 1);
+    quick_sort_asc(array, partition_index + 1, high);
+  }
+  return stats;
+}
+
+Stats* merge_stats(Stats* s1, Stats* s2) {
+  Stats* stats = malloc(sizeof(Stats));
+  stats->size_n = s1->size_n;
+  stats->cmp_count = s1->cmp_count + s2->cmp_count;
+  stats->shift_count = s1->shift_count + s2->shift_count;
+  stats->time = s1->time + s2->time;
+  return stats;
 }

@@ -31,6 +31,9 @@ int main(int argc, char** argv) {
     case QUICK:
       quick_sort(data->array, data->n, settings->asc_flag);
       break;
+    case MQUICK:
+      mquick_sort(data->array, data->n, settings->asc_flag);
+      break;
   }
 
   debug(settings, data);

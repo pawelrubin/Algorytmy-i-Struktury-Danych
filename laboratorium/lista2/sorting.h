@@ -19,6 +19,8 @@ typedef struct Stats {
   float time;
 } Stats;
 
+Stats* merge_stats(Stats* s1, Stats* s2);
+
 Stats* insertion_sort(int* array, size_t size, int asc_flag);
 
 Stats* select_sort(int* array, size_t size, int asc_flag);
