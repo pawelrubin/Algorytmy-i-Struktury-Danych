@@ -11,6 +11,8 @@
 #include <getopt.h>
 #include <string.h>
 #include "sorting.h"
+#include "heap.h"
+#include "tools.h"
 
 int main(int argc, char** argv) {
   Settings* settings = get_settings(argc, argv);
@@ -24,12 +26,14 @@ int main(int argc, char** argv) {
       insertion_sort(data->array, data->n, settings->asc_flag);
       break;
     case HEAP:
-      // heap_sort(data->array, data->n);
+      heap_sort(data->array, data->n, settings->asc_flag);
       break;
     case QUICK:
-      // quick_sort(data->array, data->n);
+      quick_sort(data->array, data->n, settings->asc_flag);
       break;
   }
   debug(settings, data);
+
+  
   return 0;
 }

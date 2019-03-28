@@ -7,107 +7,12 @@
  * 
  */
 #include "sorting.h"
+#include "tools.h"
+#include "heap.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <getopt.h>
 #include <string.h>
-
-Settings* init_settings() {
-  Settings* settings = malloc(sizeof(Settings));
-  settings->asc_flag = TRUE;
-  settings->type = -1;
-  settings->k = -1;
-  settings->file_name = NULL;
-  return settings;
-}
-
-Data* init_data(size_t n) {
-  Data* data = malloc(sizeof(Data));
-  data->n = n;
-  data->array = malloc(n * sizeof(int));
-  return data;
-}
-
-void debug(Settings* settings, Data* data) {
-  printf("Settings (If unset, value = -1 or NULL):\n");
-  printf("  asc_flag: %d\n", settings->asc_flag);
-  printf("  type: %d\n", settings->type);
-  printf("  k: %d\n", settings->k);
-  printf("  file_name: %s\n", settings->file_name);
-
-  printf("Data (If unset, value = -1 or NULL):\n");
-  printf("  n: %d\n", data->n);
-  printf("  array: [");
-  for (int i = 0; i < data->n; i++) {
-    printf("%d", data->array[i]);
-    if (i < data->n-1) {
-      printf(", ");
-    }
-  }
-  printf("]\n");
-}
-
-void print_array(int* array, size_t size) {
-  printf("[");
-  for (int i = 0; i < size; i++) {
-    printf("%d", array[i]);
-    if (i < size-1) {
-      printf(", ");
-    }
-  }
-  printf("]\n");
-}
-
-Settings* get_settings(int argc, char** argv) {
-  Settings *settings = init_settings();
-  int c, option_index, this_option_optind;
-  struct option long_options[] = {
-    {"asc", no_argument, &settings->asc_flag, 1},
-    {"desc", no_argument, &settings->asc_flag, 0},
-    {"type", required_argument, 0, 't'},
-    {"stat", required_argument, 0, 's'},
-    {0, 0, 0, 0}
-  };
-
-  while ((c = getopt_long(argc, argv, "ts", long_options, &option_index)) != -1) {
-    this_option_optind = optind ? optind : 1;
-    option_index = 0;
-
-    switch (c) {
-      case 't':
-        if (strcmp(optarg, "select") == 0) {
-          settings->type = SELECT;
-        } else if (strcmp(optarg, "insertion") == 0) {
-          settings->type = INSERTION;
-        } else if (strcmp(optarg, "heap") == 0) {
-          settings->type = HEAP;
-        } else if (strcmp(optarg, "quick") == 0) {
-          settings->type = QUICK;
-        } else if (strcmp(optarg, "mquick") == 0) {
-          settings->type = MQUICK;
-        } else {
-          printf("Uknown type.\n");
-          exit(EXIT_FAILURE);
-        }
-        break;
-      case 's':
-        settings->file_name = strdup(argv[optind - 1]);
-        settings->k = atoi(strdup(argv[optind]));
-        break;
-    }
-  }
-  return settings;
-} 
-
-Data* get_data() {
-  size_t n;
-  scanf("%d", &n);
-  Data* data = init_data(n);
-  for (int i = 0; i < n; i++) {
-    scanf("%d", &data->array[i]);
-  }
-  return data;
-}
 
 Stats* select_sort(int* array, size_t size, int asc_flag) {
   if (asc_flag) {
@@ -165,29 +70,73 @@ Stats* insertion_sort_desc(int* array, size_t size) {
   return stats;
 }
 
-int* find_min(int* array, size_t size) {
-  int* min = array;
-  for (int i = 1; i < size; i++) {
-    if (array[i] < *min) {
-      min = &array[i];
+
+Stats* heap_sort(int* array, size_t size, int asc_flag) {
+  if (asc_flag) {
+    return heap_sort_asc(array, size);
+  } else {
+    return heap_sort_desc(array, size);
+  }
+}
+
+Stats* heap_sort_asc(int* array, size_t size) {
+  Stats* stats = malloc(sizeof(Stats));
+  build_max_heap(array, size);
+  for (int i = size - 1; i >= 0; i--) {
+    swap(&array[0], &array[i]);
+    max_heapify(array, i, 0);
+  }
+  return stats;
+}
+
+Stats* heap_sort_desc(int* array, size_t size) {
+  Stats* stats = malloc(sizeof(Stats));
+  build_min_heap(array, size);
+  for (int i = size - 1; i >= 0; i--) {
+    swap(&array[0], &array[i]);
+    min_heapify(array, i, 0);
+  }
+  return stats;
+}
+
+int partition(int* array, int low, int high) {
+  int pivot = array[high];
+  int i = (low - 1);
+
+  for (int j = low; j <= (high - 1); j++) {
+    if (array[j] <= pivot) {
+      i++;
+      swap(&array[i], &array[j]);
     }
   }
-  return min;
+  swap(&array[i + 1], &array[high]);
+  return (i + 1);
 }
 
-int* find_max(int* array, size_t size) {
-  int* max = array;
-  for (int i = 1; i < size; i++) {
-    if (array[i] > *max) {
-      max = &array[i];
-    }
+Stats* quick_sort_asc(int* array, int low, int high) {
+  Stats* stats = malloc(sizeof(Stats));  
+  if (low < high) {
+    int partition_index = partition(array, low, high);
+    quick_sort(array, low, partition_index - 1);
+    quick_sort(array, partition_index + 1, high);
   }
-  return max;
+  return stats;
 }
 
-void swap(int* a, int* b) {
-  int temp = *a;
-  *a = *b;
-  *b = temp;
+Stats* quick_sort(int* array, size_t size, int asc_flag) {
+  if (asc_flag) {
+    return quick_sort_asc(array, 0, size - 1);
+  } else {
+    return quick_sort_desc(array, 0, size - 1);
+  }
 }
 
+Stats* quick_sort_desc(int* array, int low, int high) {
+  Stats* stats = malloc(sizeof(Stats));  
+  if (low < high) {
+    int partition_index = partition(array, low, high);
+    quick_sort(array, low, partition_index - 1);
+    quick_sort(array, partition_index + 1, high);
+  }
+  return stats;
+}
