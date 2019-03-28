@@ -14,11 +14,46 @@
 #include <getopt.h>
 #include <string.h>
 
+Stats* select_sort_asc(int* array, size_t size);
+Stats* select_sort_desc(int* array, size_t size);
+Stats* insertion_sort_asc(int* array, size_t size);
+Stats* insertion_sort_desc(int* array, size_t size);
+Stats* heap_sort_asc(int* array, size_t size);
+Stats* heap_sort_desc(int* array, size_t size);
+Stats* quick_sort_asc(int* array, int low, int high);
+Stats* quick_sort_desc(int* array, int low, int high);
+int partition_asc(int* array, int low, int high);
+int partition_desc(int* array, int low, int high);
+
 Stats* select_sort(int* array, size_t size, int asc_flag) {
   if (asc_flag) {
     return select_sort_asc(array, size);
   } else {
     return select_sort_desc(array, size);
+  }
+}
+
+Stats* insertion_sort(int* array, size_t size, int asc_flag) {
+  if (asc_flag) {
+    return insertion_sort_asc(array, size);
+  } else {
+    return insertion_sort_desc(array, size);
+  }
+}
+
+Stats* heap_sort(int* array, size_t size, int asc_flag) {
+  if (asc_flag) {
+    return heap_sort_asc(array, size);
+  } else {
+    return heap_sort_desc(array, size);
+  }
+}
+
+Stats* quick_sort(int* array, size_t size, int asc_flag) {
+  if (asc_flag) {
+    return quick_sort_asc(array, 0, size - 1);
+  } else {
+    return quick_sort_desc(array, 0, size - 1);
   }
 }
 
@@ -36,14 +71,6 @@ Stats* select_sort_desc(int* array, size_t size) {
     swap(&array[i], find_max(array + i, size - i));
   }
   return stats;
-}
-
-Stats* insertion_sort(int* array, size_t size, int asc_flag) {
-  if (asc_flag) {
-    return insertion_sort_asc(array, size);
-  } else {
-    return insertion_sort_desc(array, size);
-  }
 }
 
 Stats* insertion_sort_asc(int* array, size_t size) {
@@ -70,15 +97,6 @@ Stats* insertion_sort_desc(int* array, size_t size) {
   return stats;
 }
 
-
-Stats* heap_sort(int* array, size_t size, int asc_flag) {
-  if (asc_flag) {
-    return heap_sort_asc(array, size);
-  } else {
-    return heap_sort_desc(array, size);
-  }
-}
-
 Stats* heap_sort_asc(int* array, size_t size) {
   Stats* stats = malloc(sizeof(Stats));
   build_max_heap(array, size);
@@ -95,6 +113,26 @@ Stats* heap_sort_desc(int* array, size_t size) {
   for (int i = size - 1; i >= 0; i--) {
     swap(&array[0], &array[i]);
     min_heapify(array, i, 0);
+  }
+  return stats;
+}
+
+Stats* quick_sort_asc(int* array, int low, int high) {
+  Stats* stats = malloc(sizeof(Stats));  
+  if (low < high) {
+    int partition_index = partition_asc(array, low, high);
+    quick_sort_asc(array, low, partition_index - 1);
+    quick_sort_asc(array, partition_index + 1, high);
+  }
+  return stats;
+}
+
+Stats* quick_sort_desc(int* array, int low, int high) {
+  Stats* stats = malloc(sizeof(Stats));  
+  if (low < high) {
+    int partition_index = partition_desc(array, low, high);
+    quick_sort_desc(array, low, partition_index - 1);
+    quick_sort_desc(array, partition_index + 1, high);
   }
   return stats;
 }
@@ -125,32 +163,4 @@ int partition_desc(int* array, int low, int high) {
   }
   swap(&array[i + 1], &array[high]);
   return (i + 1);
-}
-
-Stats* quick_sort_asc(int* array, int low, int high) {
-  Stats* stats = malloc(sizeof(Stats));  
-  if (low < high) {
-    int partition_index = partition_asc(array, low, high);
-    quick_sort_asc(array, low, partition_index - 1);
-    quick_sort_asc(array, partition_index + 1, high);
-  }
-  return stats;
-}
-
-Stats* quick_sort(int* array, size_t size, int asc_flag) {
-  if (asc_flag) {
-    return quick_sort_asc(array, 0, size - 1);
-  } else {
-    return quick_sort_desc(array, 0, size - 1);
-  }
-}
-
-Stats* quick_sort_desc(int* array, int low, int high) {
-  Stats* stats = malloc(sizeof(Stats));  
-  if (low < high) {
-    int partition_index = partition_desc(array, low, high);
-    quick_sort_desc(array, low, partition_index - 1);
-    quick_sort_desc(array, partition_index + 1, high);
-  }
-  return stats;
 }

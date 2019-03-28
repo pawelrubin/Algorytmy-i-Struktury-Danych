@@ -20,20 +20,12 @@ typedef struct Stats {
 } Stats;
 
 Stats* insertion_sort(int* array, size_t size, int asc_flag);
-Stats* insertion_sort_asc(int* array, size_t size);
-Stats* insertion_sort_desc(int* array, size_t size);
 
 Stats* select_sort(int* array, size_t size, int asc_flag);
-Stats* select_sort_asc(int* array, size_t size);
-Stats* select_sort_desc(int* array, size_t size);
 
 Stats* heap_sort(int* array, size_t size, int asc_flag);
-Stats* heap_sort_asc(int* array, size_t size);
-Stats* heap_sort_desc(int* array, size_t size);
 
 Stats* quick_sort(int* array, size_t size, int asc_flag);
-Stats* quick_sort_asc(int* array, int p, int r);
-Stats* quick_sort_desc(int* array, int p, int r);
 
 Stats* mquick_sort(int* array, size_t size, int asc_flag);
 
