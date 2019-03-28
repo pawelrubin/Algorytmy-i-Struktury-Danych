@@ -32,8 +32,8 @@ int main(int argc, char** argv) {
       quick_sort(data->array, data->n, settings->asc_flag);
       break;
   }
+
   debug(settings, data);
 
-  
   return 0;
 }

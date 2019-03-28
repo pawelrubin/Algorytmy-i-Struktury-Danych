@@ -99,7 +99,7 @@ Stats* heap_sort_desc(int* array, size_t size) {
   return stats;
 }
 
-int partition(int* array, int low, int high) {
+int partition_asc(int* array, int low, int high) {
   int pivot = array[high];
   int i = (low - 1);
 
@@ -113,12 +113,26 @@ int partition(int* array, int low, int high) {
   return (i + 1);
 }
 
+int partition_desc(int* array, int low, int high) {
+  int pivot = array[high];
+  int i = (low - 1);
+
+  for (int j = low; j <= (high - 1); j++) {
+    if (array[j] >= pivot) {
+      i++;
+      swap(&array[i], &array[j]);
+    }
+  }
+  swap(&array[i + 1], &array[high]);
+  return (i + 1);
+}
+
 Stats* quick_sort_asc(int* array, int low, int high) {
   Stats* stats = malloc(sizeof(Stats));  
   if (low < high) {
-    int partition_index = partition(array, low, high);
-    quick_sort(array, low, partition_index - 1);
-    quick_sort(array, partition_index + 1, high);
+    int partition_index = partition_asc(array, low, high);
+    quick_sort_asc(array, low, partition_index - 1);
+    quick_sort_asc(array, partition_index + 1, high);
   }
   return stats;
 }
@@ -134,9 +148,9 @@ Stats* quick_sort(int* array, size_t size, int asc_flag) {
 Stats* quick_sort_desc(int* array, int low, int high) {
   Stats* stats = malloc(sizeof(Stats));  
   if (low < high) {
-    int partition_index = partition(array, low, high);
-    quick_sort(array, low, partition_index - 1);
-    quick_sort(array, partition_index + 1, high);
+    int partition_index = partition_desc(array, low, high);
+    quick_sort_desc(array, low, partition_index - 1);
+    quick_sort_desc(array, partition_index + 1, high);
   }
   return stats;
 }
