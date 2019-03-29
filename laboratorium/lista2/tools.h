@@ -30,6 +30,7 @@ typedef struct Settings {
   int asc_flag;
   int k;
   int type;
+  int stat_flag;
   char* file_name;
 } Settings;
 
@@ -55,5 +56,11 @@ int* find_min(int* array, size_t size);
 int* find_max(int* array, size_t size);
 
 void swap(int* a, int* b);
+
+int* rand_array(size_t n);
+
+int* copy_array(int* array, size_t size);
+
+void save_stats_to_file(Stats* stats, char* filename, int append);
 
 #endif

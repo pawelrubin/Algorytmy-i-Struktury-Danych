@@ -31,7 +31,7 @@ void merge_stats(Stats* s1, Stats* s2);
 Stats* new_stats();
 
 Stats* select_sort(int* array, size_t size, int asc_flag) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "select");
   clock_t begin = clock();
   if (asc_flag) {
     stats = select_sort_asc(array, size);
@@ -44,7 +44,7 @@ Stats* select_sort(int* array, size_t size, int asc_flag) {
 }
 
 Stats* insertion_sort(int* array, size_t size, int asc_flag) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "insertion");
   clock_t begin = clock();
   if (asc_flag) {
     stats = insertion_sort_asc(array, size);
@@ -57,7 +57,7 @@ Stats* insertion_sort(int* array, size_t size, int asc_flag) {
 }
 
 Stats* heap_sort(int* array, size_t size, int asc_flag) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "heap");
   clock_t begin = clock();
   if (asc_flag) {
     stats = heap_sort_asc(array, size);
@@ -70,7 +70,7 @@ Stats* heap_sort(int* array, size_t size, int asc_flag) {
 }
 
 Stats* quick_sort(int* array, size_t size, int asc_flag) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "quick");
   clock_t begin = clock();
   if (asc_flag) {
     quick_sort_asc(array, 0, size - 1, stats);
@@ -83,7 +83,7 @@ Stats* quick_sort(int* array, size_t size, int asc_flag) {
 }
 
 Stats* mquick_sort(int* array, size_t size, int asc_flag) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "mquick");
   clock_t begin = clock();
   if (asc_flag) {
     mquick_sort_asc(array, 0, size - 1, stats);
@@ -96,7 +96,7 @@ Stats* mquick_sort(int* array, size_t size, int asc_flag) {
 }
 
 Stats* select_sort_asc(int* array, size_t size) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "select");
   for (int i = 0; i < size; i++) {
     swap(&array[i], find_min(array + i, size - i));
     // comparisons in find_max + 1 in the for loop
@@ -108,7 +108,7 @@ Stats* select_sort_asc(int* array, size_t size) {
 }
 
 Stats* select_sort_desc(int* array, size_t size) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "select");
   for (int i = 0;  i < size; i++) {
     swap(&array[i], find_max(array + i, size - i));
     // comparisons in find_max + 1 in the for loop
@@ -120,7 +120,7 @@ Stats* select_sort_desc(int* array, size_t size) {
 }
 
 Stats* insertion_sort_asc(int* array, size_t size) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "insertion");
   for (int i = 0; i < size; i++) {
     int j = i;
     while (j > 0 && array[j-1] > array[j]) {
@@ -136,7 +136,7 @@ Stats* insertion_sort_asc(int* array, size_t size) {
 }
 
 Stats* insertion_sort_desc(int* array, size_t size) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "insertion");
   for (int i = 0; i < size; i++) {
     int j = i;
     while (j > 0 && array[j-1] < array[j]) {
@@ -152,7 +152,7 @@ Stats* insertion_sort_desc(int* array, size_t size) {
 }
 
 Stats* heap_sort_asc(int* array, size_t size) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "heap");
   build_max_heap(array, size, stats);
   for (int i = (size - 1); i >= 0; i--) {
     swap(&array[0], &array[i]);
@@ -163,7 +163,7 @@ Stats* heap_sort_asc(int* array, size_t size) {
 }
 
 Stats* heap_sort_desc(int* array, size_t size) {
-  Stats* stats = new_stats(size);
+  Stats* stats = new_stats(size, "heap");
   build_min_heap(array, size, stats);
   for (int i = (size - 1); i >= 0; i--) {
     swap(&array[0], &array[i]);
@@ -257,8 +257,9 @@ void merge_stats(Stats* s1, Stats* s2) {
   s1->time += s2->time;
 }
 
-Stats* new_stats(size_t size) {
+Stats* new_stats(size_t size, char* type) {
   Stats *stats = malloc(sizeof(Stats));
+  stats->type = type;
   stats->size = size;
   stats->cmp_count = 0;
   stats->shift_count = 0;
@@ -272,4 +273,34 @@ void print_stats(Stats* stats) {
   printf("  cmp_count: %d", stats->cmp_count); 
   printf("  shift_count: %d", stats->shift_count); 
   printf("  time: %f", stats->time); 
+}
+
+void run_sorts(int k, char* file_name, int asc_flag) {
+  for (int n = 100; n <= 10000; n += 100) {
+    for (int i = 0; i < k; i++) {
+      int* array = rand_array(n);
+      int* cpy;
+      Stats* stats;
+
+      cpy = copy_array(array, n);
+      stats = select_sort(cpy, n, asc_flag);
+      save_stats_to_file(stats, file_name, 1);
+
+      cpy = copy_array(array, n);
+      stats = insertion_sort(cpy, n, asc_flag);
+      save_stats_to_file(stats, file_name, 1);
+
+      cpy = copy_array(array, n);
+      stats = heap_sort(cpy, n, asc_flag);
+      save_stats_to_file(stats, file_name, 1);
+
+      cpy = copy_array(array, n);
+      stats = quick_sort(cpy, n, asc_flag);
+      save_stats_to_file(stats, file_name, 1);
+
+      cpy = copy_array(array, n);
+      stats = mquick_sort(cpy, n, asc_flag);
+      save_stats_to_file(stats, file_name, 1);
+    }
+  }
 }

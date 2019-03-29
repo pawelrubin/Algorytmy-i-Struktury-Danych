@@ -8,12 +8,15 @@
  */
 
 #include "tools.h"
+#include "pcg_basic.h"
+#include <time.h>
 
 Settings* init_settings() {
   Settings* settings = malloc(sizeof(Settings));
   settings->asc_flag = TRUE;
   settings->type = -1;
   settings->k = -1;
+  settings->stat_flag = -1;
   settings->file_name = NULL;
   return settings;
 }
@@ -87,6 +90,7 @@ Settings* get_settings(int argc, char** argv) {
         }
         break;
       case 's':
+        settings->stat_flag = 1;
         settings->file_name = strdup(argv[optind - 1]);
         settings->k = atoi(strdup(argv[optind]));
         break;
@@ -130,4 +134,33 @@ int* find_max(int* array, size_t size) {
     }
   }
   return max;
+}
+
+int* rand_array(size_t n) {
+  int* array = malloc(n * sizeof(int));
+  pcg32_random_t rng;
+  int rounds = 5;
+  pcg32_srandom_r(&rng, time(NULL) ^ (intptr_t)&printf, 
+			      (intptr_t)&rounds);
+            
+  for (int i = 0; i < n; i++) {
+    array[i] = pcg32_random_r(&rng);
+  }
+
+  return array;
+}
+
+void save_stats_to_file(Stats* stats, char* file_name, int append) {
+  char* mode = append ? "a" : "w+";
+  FILE* fptr = fopen(file_name, mode);
+  fprintf(fptr, "%s;%d;%d;%d;%f\n", stats->type, stats->size, 
+    stats->cmp_count, stats->shift_count, stats->time);
+  fclose(fptr);
+}
+
+int* copy_array(int* array, size_t size) {
+  size_t n = size * sizeof(int);
+  int* cpy = malloc(n);
+  memcpy(cpy, array, n);
+  return cpy;
 }

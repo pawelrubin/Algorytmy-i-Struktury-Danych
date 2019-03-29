@@ -16,27 +16,30 @@
 
 int main(int argc, char** argv) {
   Settings* settings = get_settings(argc, argv);
-  Data* data = get_data();
-  Stats* stats;
-  debug(settings, data);
-  switch (settings->type) {
-    case SELECT:
-      stats = select_sort(data->array, data->n, settings->asc_flag);
-      break;
-    case INSERTION:
-      stats = insertion_sort(data->array, data->n, settings->asc_flag);
-      break;
-    case HEAP:
-      stats = heap_sort(data->array, data->n, settings->asc_flag);
-      break;
-    case QUICK:
-      stats = quick_sort(data->array, data->n, settings->asc_flag);
-      break;
-    case MQUICK:
-      stats = mquick_sort(data->array, data->n, settings->asc_flag);
-      break;
+  if (settings->stat_flag == -1) {
+    Data* data = get_data();
+    Stats* stats;
+    switch (settings->type) {
+      case SELECT:
+        stats = select_sort(data->array, data->n, settings->asc_flag);
+        break;
+      case INSERTION:
+        stats = insertion_sort(data->array, data->n, settings->asc_flag);
+        break;
+      case HEAP:
+        stats = heap_sort(data->array, data->n, settings->asc_flag);
+        break;
+      case QUICK:
+        stats = quick_sort(data->array, data->n, settings->asc_flag);
+        break;
+      case MQUICK:
+        stats = mquick_sort(data->array, data->n, settings->asc_flag);
+        break;
+    }
+    print_stats(stats);
+  } else{
+    run_sorts(settings->k, settings->file_name, settings->asc_flag);
   }
-  debug(settings, data);
-  print_stats(stats);
+  
   return 0;
 }
