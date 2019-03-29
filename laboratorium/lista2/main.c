@@ -17,26 +17,26 @@
 int main(int argc, char** argv) {
   Settings* settings = get_settings(argc, argv);
   Data* data = get_data();
+  Stats* stats;
   debug(settings, data);
   switch (settings->type) {
     case SELECT:
-      select_sort(data->array, data->n, settings->asc_flag);
+      stats = select_sort(data->array, data->n, settings->asc_flag);
       break;
     case INSERTION:
-      insertion_sort(data->array, data->n, settings->asc_flag);
+      stats = insertion_sort(data->array, data->n, settings->asc_flag);
       break;
     case HEAP:
-      heap_sort(data->array, data->n, settings->asc_flag);
+      stats = heap_sort(data->array, data->n, settings->asc_flag);
       break;
     case QUICK:
-      quick_sort(data->array, data->n, settings->asc_flag);
+      stats = quick_sort(data->array, data->n, settings->asc_flag);
       break;
     case MQUICK:
-      mquick_sort(data->array, data->n, settings->asc_flag);
+      stats = mquick_sort(data->array, data->n, settings->asc_flag);
       break;
   }
-
   debug(settings, data);
-
+  print_stats(stats);
   return 0;
 }

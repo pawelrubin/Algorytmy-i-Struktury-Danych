@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <string.h>
+#include <time.h>
 
 Stats* select_sort_asc(int* array, size_t size);
 Stats* select_sort_desc(int* array, size_t size);
@@ -20,189 +21,255 @@ Stats* insertion_sort_asc(int* array, size_t size);
 Stats* insertion_sort_desc(int* array, size_t size);
 Stats* heap_sort_asc(int* array, size_t size);
 Stats* heap_sort_desc(int* array, size_t size);
-Stats* quick_sort_asc(int* array, int low, int high);
-Stats* quick_sort_desc(int* array, int low, int high);
-Stats* mquick_sort_asc(int* array, int loq, int high);
-Stats* mquick_sort_desc(int* array, int loq, int high);
-int partition_asc(int* array, int low, int high);
-int partition_desc(int* array, int low, int high);
-Stats* merge_stats(Stats* s1, Stats* s2);
+void quick_sort_asc(int* array, int low, int high, Stats* stats);
+void quick_sort_desc(int* array, int low, int high, Stats* stats);
+void mquick_sort_asc(int* array, int loq, int high, Stats* stats);
+void mquick_sort_desc(int* array, int loq, int high, Stats* stats);
+int partition_asc(int* array, int low, int high, Stats* stats);
+int partition_desc(int* array, int low, int high, Stats* stats);
+void merge_stats(Stats* s1, Stats* s2);
+Stats* new_stats();
 
 Stats* select_sort(int* array, size_t size, int asc_flag) {
+  Stats* stats = new_stats(size);
+  clock_t begin = clock();
   if (asc_flag) {
-    return select_sort_asc(array, size);
+    stats = select_sort_asc(array, size);
   } else {
-    return select_sort_desc(array, size);
+    stats = select_sort_desc(array, size);
   }
+  clock_t end = clock();
+  stats->time = (double)(end - begin) / CLOCKS_PER_SEC;
+  return stats;
 }
 
 Stats* insertion_sort(int* array, size_t size, int asc_flag) {
+  Stats* stats = new_stats(size);
+  clock_t begin = clock();
   if (asc_flag) {
-    return insertion_sort_asc(array, size);
+    stats = insertion_sort_asc(array, size);
   } else {
-    return insertion_sort_desc(array, size);
+    stats = insertion_sort_desc(array, size);
   }
+  clock_t end = clock();
+  stats->time = (double)(end - begin) / CLOCKS_PER_SEC;
+  return stats;
 }
 
 Stats* heap_sort(int* array, size_t size, int asc_flag) {
+  Stats* stats = new_stats(size);
+  clock_t begin = clock();
   if (asc_flag) {
-    return heap_sort_asc(array, size);
+    stats = heap_sort_asc(array, size);
   } else {
-    return heap_sort_desc(array, size);
+    stats = heap_sort_desc(array, size);
   }
+  clock_t end = clock();
+  stats->time = (double)(end - begin) / CLOCKS_PER_SEC;
+  return stats;
 }
 
 Stats* quick_sort(int* array, size_t size, int asc_flag) {
+  Stats* stats = new_stats(size);
+  clock_t begin = clock();
   if (asc_flag) {
-    return quick_sort_asc(array, 0, size - 1);
+    quick_sort_asc(array, 0, size - 1, stats);
   } else {
-    return quick_sort_desc(array, 0, size - 1);
+    quick_sort_desc(array, 0, size - 1, stats);
   }
+  clock_t end = clock();
+  stats->time = (double)(end - begin) / CLOCKS_PER_SEC;
+  return stats;
 }
 
 Stats* mquick_sort(int* array, size_t size, int asc_flag) {
+  Stats* stats = new_stats(size);
+  clock_t begin = clock();
   if (asc_flag) {
-    return mquick_sort_asc(array, 0, size - 1);
+    mquick_sort_asc(array, 0, size - 1, stats);
   } else {
-    return mquick_sort_desc(array, 0, size - 1);
+    mquick_sort_desc(array, 0, size - 1, stats);
   }
+  clock_t end = clock();
+  stats->time = (double)(end - begin) / CLOCKS_PER_SEC;
+  return stats;
 }
 
 Stats* select_sort_asc(int* array, size_t size) {
-  Stats* stats = malloc(sizeof(Stats));
+  Stats* stats = new_stats(size);
   for (int i = 0; i < size; i++) {
     swap(&array[i], find_min(array + i, size - i));
+    // comparisons in find_max + 1 in the for loop
+    stats->cmp_count += 2 * ((int)size - 1) + 1;
+    stats->shift_count++;
   }
+  stats->cmp_count++;
   return stats;
 }
 
 Stats* select_sort_desc(int* array, size_t size) {
-  Stats* stats = malloc(sizeof(Stats));
-  for (int i = 0; i < size; i++) {
+  Stats* stats = new_stats(size);
+  for (int i = 0;  i < size; i++) {
     swap(&array[i], find_max(array + i, size - i));
+    // comparisons in find_max + 1 in the for loop
+    stats->cmp_count += 2 * ((int)size - 1) + 1; 
+    stats->shift_count++;
   }
+  stats->cmp_count++;
   return stats;
 }
 
 Stats* insertion_sort_asc(int* array, size_t size) {
-  Stats* stats = malloc(sizeof(Stats));
+  Stats* stats = new_stats(size);
   for (int i = 0; i < size; i++) {
     int j = i;
     while (j > 0 && array[j-1] > array[j]) {
       swap(&array[j], &array[j-1]);
       j--;
+      stats->cmp_count += 2;
+      stats->shift_count++;
     }
+    stats->cmp_count += 2; // last cmp in while, cmp in for
   }
+  stats->cmp_count++; // last cmp in for
   return stats;
 }
 
 Stats* insertion_sort_desc(int* array, size_t size) {
-  Stats* stats = malloc(sizeof(Stats));
+  Stats* stats = new_stats(size);
   for (int i = 0; i < size; i++) {
     int j = i;
     while (j > 0 && array[j-1] < array[j]) {
       swap(&array[j], &array[j-1]);
       j--;
+      stats->cmp_count += 2;
+      stats->shift_count++;
     }
+    stats->cmp_count += 2; // last cmp in while, cmp in for
   }
+  stats->cmp_count++; // last cmp in for
   return stats;
 }
 
 Stats* heap_sort_asc(int* array, size_t size) {
-  Stats* stats = malloc(sizeof(Stats));
-  build_max_heap(array, size);
-  for (int i = size - 1; i >= 0; i--) {
+  Stats* stats = new_stats(size);
+  build_max_heap(array, size, stats);
+  for (int i = (size - 1); i >= 0; i--) {
     swap(&array[0], &array[i]);
-    max_heapify(array, i, 0);
+    max_heapify(array, i, 0, stats);
+    stats->shift_count++;
   }
   return stats;
 }
 
 Stats* heap_sort_desc(int* array, size_t size) {
-  Stats* stats = malloc(sizeof(Stats));
-  build_min_heap(array, size);
-  for (int i = size - 1; i >= 0; i--) {
+  Stats* stats = new_stats(size);
+  build_min_heap(array, size, stats);
+  for (int i = (size - 1); i >= 0; i--) {
     swap(&array[0], &array[i]);
-    min_heapify(array, i, 0);
+    min_heapify(array, i, 0, stats);
+    stats->shift_count++;
   }
   return stats;
 }
 
-Stats* quick_sort_asc(int* array, int low, int high) {
-  Stats* stats = malloc(sizeof(Stats));  
+void quick_sort_asc(int* array, int low, int high, Stats* stats) {
+  stats->cmp_count++;
   if (low < high) {
-    int partition_index = partition_asc(array, low, high);
-    quick_sort_asc(array, low, partition_index - 1);
-    quick_sort_asc(array, partition_index + 1, high);
+    int partition_index = partition_asc(array, low, high, stats);
+    quick_sort_asc(array, low, partition_index - 1, stats);
+    quick_sort_asc(array, partition_index + 1, high, stats);
   }
-  return stats;
 }
 
-Stats* quick_sort_desc(int* array, int low, int high) {
-  Stats* stats = malloc(sizeof(Stats));  
+void quick_sort_desc(int* array, int low, int high, Stats* stats) {
+  stats->cmp_count++;
   if (low < high) {
-    int partition_index = partition_desc(array, low, high);
-    quick_sort_desc(array, low, partition_index - 1);
-    quick_sort_desc(array, partition_index + 1, high);
+    int partition_index = partition_desc(array, low, high, stats);
+    quick_sort_desc(array, low, partition_index - 1, stats);
+    quick_sort_desc(array, partition_index + 1, high, stats);
   }
-  return stats;
 }
 
-int partition_asc(int* array, int low, int high) {
+int partition_asc(int* array, int low, int high, Stats* stats) {
   int pivot = array[high];
   int i = (low - 1);
 
   for (int j = low; j <= (high - 1); j++) {
+    stats->cmp_count += 2; // comparisons in the for loop and the if statement
     if (array[j] <= pivot) {
       i++;
       swap(&array[i], &array[j]);
+      stats->shift_count++;
     }
   }
+  stats->cmp_count++; // last comparison while exiting the loop
   swap(&array[i + 1], &array[high]);
+  stats->shift_count++;
+  
   return (i + 1);
 }
 
-int partition_desc(int* array, int low, int high) {
+int partition_desc(int* array, int low, int high, Stats* stats) {
   int pivot = array[high];
   int i = (low - 1);
 
   for (int j = low; j <= (high - 1); j++) {
+    stats->cmp_count += 2; // comparisons in the for loop and the if statement
     if (array[j] >= pivot) {
       i++;
       swap(&array[i], &array[j]);
+      stats->shift_count++;
     }
   }
+  stats->cmp_count++; // last comparison while exiting the loop
   swap(&array[i + 1], &array[high]);
+  stats->shift_count++;
+
   return (i + 1);
 }
 
-Stats* mquick_sort_asc(int* array, int low, int high) {
-  Stats* stats = malloc(sizeof(Stats));  
+void mquick_sort_asc(int* array, int low, int high, Stats* stats) {
+  stats->cmp_count++;
   if (low < high) {
-    if (high <= 16) return merge_stats(stats, insertion_sort_asc(array, high + 1));
-    int partition_index = partition_asc(array, low, high);
-    quick_sort_asc(array, low, partition_index - 1);
-    quick_sort_asc(array, partition_index + 1, high);
+    stats->cmp_count++;
+    if (high <= 17) merge_stats(stats, insertion_sort_asc(array, high + 1));
+    int partition_index = partition_asc(array, low, high, stats);
+    mquick_sort_asc(array, low, partition_index - 1, stats);
+    mquick_sort_asc(array, partition_index + 1, high, stats);
   }
+}
+
+void mquick_sort_desc(int* array, int low, int high, Stats* stats) {
+  stats->cmp_count++;
+  if (low < high) {
+    stats->cmp_count++;
+    if (high <= 17) merge_stats(stats, insertion_sort_desc(array, high + 1));     
+    int partition_index = partition_desc(array, low, high, stats);
+    mquick_sort_desc(array, low, partition_index - 1, stats);
+    mquick_sort_desc(array, partition_index + 1, high, stats);
+  }
+}
+
+void merge_stats(Stats* s1, Stats* s2) {
+  s1->cmp_count += s2->cmp_count;
+  s1->shift_count += s2->shift_count;
+  s1->time += s2->time;
+}
+
+Stats* new_stats(size_t size) {
+  Stats *stats = malloc(sizeof(Stats));
+  stats->size = size;
+  stats->cmp_count = 0;
+  stats->shift_count = 0;
+  stats->time = 0;
   return stats;
 }
 
-Stats* mquick_sort_desc(int* array, int low, int high) {
-  Stats* stats = malloc(sizeof(Stats));  
-  if (low < high) {
-    if (high <= 17) return merge_stats(stats, insertion_sort_desc(array, high + 1));
-    int partition_index = partition_desc(array, low, high);
-    quick_sort_asc(array, low, partition_index - 1);
-    quick_sort_asc(array, partition_index + 1, high);
-  }
-  return stats;
-}
-
-Stats* merge_stats(Stats* s1, Stats* s2) {
-  Stats* stats = malloc(sizeof(Stats));
-  stats->size_n = s1->size_n;
-  stats->cmp_count = s1->cmp_count + s2->cmp_count;
-  stats->shift_count = s1->shift_count + s2->shift_count;
-  stats->time = s1->time + s2->time;
-  return stats;
+void print_stats(Stats* stats) {
+  printf("Stats:\n");
+  printf("  size: %d", stats->size);
+  printf("  cmp_count: %d", stats->cmp_count); 
+  printf("  shift_count: %d", stats->shift_count); 
+  printf("  time: %f", stats->time); 
 }

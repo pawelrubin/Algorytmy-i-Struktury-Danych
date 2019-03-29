@@ -9,6 +9,7 @@
 
 #include "heap.h"
 #include "tools.h"
+#include "sorting.h"
 #include <stdlib.h>
 
 extern inline int parent(int i);
@@ -17,41 +18,53 @@ extern inline int left(int i);
 
 extern inline int right(int i);
 
-void max_heapify(int* array, size_t size, int i) {
+void max_heapify(int* array, size_t size, int i, Stats* stats) {
   int l = left(i);
   int r = l + 1;
   int max = i;
 
+  stats->cmp_count++;
   if (l < size && array[l] > array[i]) {
+    stats->cmp_count++;
     max = l;    
   } 
 
+  stats->cmp_count++;
   if (r < size && array[r] > array[max]) {
+    stats->cmp_count++;
     max = r;
   }
 
+  stats->cmp_count++;
   if (max != i) {
     swap(&array[i], &array[max]);
-    max_heapify(array, size, max);
+    stats->shift_count++;
+    max_heapify(array, size, max, stats);
   }
 }
 
-void min_heapify(int* array, size_t size, int i) {
+void min_heapify(int* array, size_t size, int i, Stats* stats) {
   int l = left(i);
   int r = l + 1;
   int min = i;
 
+  stats->cmp_count++;  
   if (l < size && array[l] < array[i]) {
+    stats->cmp_count++;  
     min = l;    
   } 
 
+  stats->cmp_count++;  
   if (r < size && array[r] < array[min]) {
+    stats->cmp_count++;  
     min = r;
   }
 
+  stats->cmp_count++;  
   if (min != i) {
     swap(&array[i], &array[min]);
-    min_heapify(array, size, min);
+    stats->shift_count++;  
+    min_heapify(array, size, min, stats);
   }
 }
 
@@ -61,14 +74,18 @@ void min_heapify(int* array, size_t size, int i) {
  * @param array 
  * @param size 
  */
-void build_max_heap(int* array, size_t size) {
+void build_max_heap(int* array, size_t size, Stats* stats) {
+  stats->cmp_count++;
   for (int i = size/2 - 1; i >= 0; i--) {
-    max_heapify(array, size, i);
+    stats->cmp_count++;
+    max_heapify(array, size, i, stats);
   }
 }
 
-void build_min_heap(int* array, size_t size) {
+void build_min_heap(int* array, size_t size, Stats* stats) {
+  stats->cmp_count++;
   for (int i = size/2 - 1; i >= 0; i--) {
-    min_heapify(array, size, i);
+    stats->cmp_count++;
+    min_heapify(array, size, i, stats);
   }
 }

@@ -10,6 +10,7 @@
 #ifndef HEAP_H
 #define HEAP_H
 
+#include "sorting.h"
 #include <stdlib.h>
 
 inline int parent(int i) {
@@ -31,11 +32,11 @@ inline int right(int i) {
  * @param size 
  * @param i 
  */
-void max_heapify(int* array, size_t size, int i);
-void min_heapify(int* array, size_t size, int i);
+void max_heapify(int* array, size_t size, int i, Stats* stats);
+void min_heapify(int* array, size_t size, int i, Stats* stats);
 
-void build_max_heap(int* array, size_t size);
-void build_min_heap(int* array, size_t size);
+void build_max_heap(int* array, size_t size, Stats* stats);
+void build_min_heap(int* array, size_t size, Stats* stats);
 
 
 #endif
