@@ -164,3 +164,9 @@ int* copy_array(int* array, size_t size) {
   memcpy(cpy, array, n);
   return cpy;
 }
+
+void create_file(char* file_name) {
+  FILE* fptr = fopen(file_name, "w+");
+  fprintf(fptr, "type;size;cmp_count;shift_count;time\n");
+  fclose(fptr);
+}

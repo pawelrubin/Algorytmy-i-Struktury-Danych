@@ -276,6 +276,7 @@ void print_stats(Stats* stats) {
 }
 
 void run_sorts(int k, char* file_name, int asc_flag) {
+  create_file(file_name);
   for (int n = 100; n <= 10000; n += 100) {
     for (int i = 0; i < k; i++) {
       int* array = rand_array(n);

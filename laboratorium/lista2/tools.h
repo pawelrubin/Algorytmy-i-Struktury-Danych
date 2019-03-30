@@ -63,4 +63,6 @@ int* copy_array(int* array, size_t size);
 
 void save_stats_to_file(Stats* stats, char* filename, int append);
 
+void create_file(char* file_name);
+
 #endif
