@@ -278,30 +278,42 @@ void print_stats(Stats* stats) {
 void run_sorts(int k, char* file_name, int asc_flag) {
   create_file(file_name);
   for (int n = 100; n <= 10000; n += 100) {
+    Stats* select_stats = new_stats(n, "select");
+    Stats* insertion_stats = new_stats(n, "insertion");
+    Stats* heap_stats = new_stats(n, "heap");
+    Stats* quick_stats = new_stats(n, "quick");
+    Stats* mquick_stats = new_stats(n, "mquick");
+
     for (int i = 0; i < k; i++) {
       int* array = rand_array(n);
       int* cpy;
-      Stats* stats;
 
       cpy = copy_array(array, n);
-      stats = select_sort(cpy, n, asc_flag);
-      save_stats_to_file(stats, file_name, 1);
+      averagify(select_stats, select_sort(cpy, n, asc_flag), k);
 
       cpy = copy_array(array, n);
-      stats = insertion_sort(cpy, n, asc_flag);
-      save_stats_to_file(stats, file_name, 1);
+      averagify(insertion_stats, insertion_sort(cpy, n, asc_flag), k);
 
       cpy = copy_array(array, n);
-      stats = heap_sort(cpy, n, asc_flag);
-      save_stats_to_file(stats, file_name, 1);
+      averagify(heap_stats, heap_sort(cpy, n, asc_flag), k);
 
       cpy = copy_array(array, n);
-      stats = quick_sort(cpy, n, asc_flag);
-      save_stats_to_file(stats, file_name, 1);
+      averagify(quick_stats, quick_sort(cpy, n, asc_flag), k);
 
       cpy = copy_array(array, n);
-      stats = mquick_sort(cpy, n, asc_flag);
-      save_stats_to_file(stats, file_name, 1);
+      averagify(mquick_stats, mquick_sort(cpy, n, asc_flag), k);
     }
+
+    save_stats_to_file(select_stats, file_name, 1);
+    save_stats_to_file(insertion_stats, file_name, 1);
+    save_stats_to_file(heap_stats, file_name, 1);
+    save_stats_to_file(quick_stats, file_name, 1);
+    save_stats_to_file(mquick_stats, file_name, 1);
   }
+}
+
+void averagify(Stats* s1, Stats* s2, int n) {
+  s1->cmp_count += (s2->cmp_count - s1->cmp_count) / (n + 1);
+  s1->shift_count += (s2->shift_count - s1->shift_count) / (n + 1);
+  s1->time += (s2->time - s1->time) / (n + 1);
 }

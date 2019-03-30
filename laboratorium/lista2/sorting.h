@@ -24,6 +24,8 @@ Stats* new_stats(size_t size, char* type);
 
 void merge_stats(Stats* s1, Stats* s2);
 
+void averagify(Stats* s1, Stats* s2, int n);
+
 Stats* insertion_sort(int* array, size_t size, int asc_flag);
 
 Stats* select_sort(int* array, size_t size, int asc_flag);
