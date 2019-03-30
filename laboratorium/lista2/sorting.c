@@ -278,6 +278,7 @@ void print_stats(Stats* stats) {
 void run_sorts(int k, char* file_name, int asc_flag) {
   create_file(file_name);
   for (int n = 100; n <= 10000; n += 100) {
+    printf("running sorts for n = %d\n", n);
     Stats* select_stats = new_stats(n, "select");
     Stats* insertion_stats = new_stats(n, "insertion");
     Stats* heap_stats = new_stats(n, "heap");
@@ -286,22 +287,26 @@ void run_sorts(int k, char* file_name, int asc_flag) {
 
     for (int i = 0; i < k; i++) {
       int* array = rand_array(n);
-      int* cpy;
+      size_t size = n * sizeof(int);
+      int* copy = malloc(size);
 
-      cpy = copy_array(array, n);
-      averagify(select_stats, select_sort(cpy, n, asc_flag), k);
+      memcpy(copy, array, size);
+      averagify(select_stats, select_sort(copy, n, asc_flag), k);
 
-      cpy = copy_array(array, n);
-      averagify(insertion_stats, insertion_sort(cpy, n, asc_flag), k);
+      memcpy(copy, array, size);
+      averagify(insertion_stats, insertion_sort(copy, n, asc_flag), k);
 
-      cpy = copy_array(array, n);
-      averagify(heap_stats, heap_sort(cpy, n, asc_flag), k);
+      memcpy(copy, array, size);
+      averagify(heap_stats, heap_sort(copy, n, asc_flag), k);
 
-      cpy = copy_array(array, n);
-      averagify(quick_stats, quick_sort(cpy, n, asc_flag), k);
+      memcpy(copy, array, size);
+      averagify(quick_stats, quick_sort(copy, n, asc_flag), k);
 
-      cpy = copy_array(array, n);
-      averagify(mquick_stats, mquick_sort(cpy, n, asc_flag), k);
+      memcpy(copy, array, size);
+      averagify(mquick_stats, mquick_sort(copy, n, asc_flag), k);
+      
+      free(array);
+      free(copy);
     }
 
     save_stats_to_file(select_stats, file_name, 1);
@@ -309,6 +314,11 @@ void run_sorts(int k, char* file_name, int asc_flag) {
     save_stats_to_file(heap_stats, file_name, 1);
     save_stats_to_file(quick_stats, file_name, 1);
     save_stats_to_file(mquick_stats, file_name, 1);
+    free(select_stats);
+    free(insertion_stats);
+    free(heap_stats);
+    free(quick_stats);
+    free(mquick_stats);
   }
 }
 
@@ -316,4 +326,5 @@ void averagify(Stats* s1, Stats* s2, int n) {
   s1->cmp_count += (s2->cmp_count - s1->cmp_count) / (n + 1);
   s1->shift_count += (s2->shift_count - s1->shift_count) / (n + 1);
   s1->time += (s2->time - s1->time) / (n + 1);
+  free(s2);
 }

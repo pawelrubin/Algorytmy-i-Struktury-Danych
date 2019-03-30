@@ -158,13 +158,6 @@ void save_stats_to_file(Stats* stats, char* file_name, int append) {
   fclose(fptr);
 }
 
-int* copy_array(int* array, size_t size) {
-  size_t n = size * sizeof(int);
-  int* cpy = malloc(n);
-  memcpy(cpy, array, n);
-  return cpy;
-}
-
 void create_file(char* file_name) {
   FILE* fptr = fopen(file_name, "w+");
   fprintf(fptr, "type;size;cmp_count;shift_count;time\n");
