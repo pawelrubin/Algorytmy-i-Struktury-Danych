@@ -63,4 +63,6 @@ void save_stats_to_file(Stats* stats, char* filename, int append);
 
 void create_file(char* file_name);
 
+int median(int* array, size_t size, Stats* stats);
+
 #endif

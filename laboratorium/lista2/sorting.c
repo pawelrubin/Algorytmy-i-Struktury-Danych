@@ -27,6 +27,8 @@ void mquick_sort_asc(int* array, int loq, int high, Stats* stats);
 void mquick_sort_desc(int* array, int loq, int high, Stats* stats);
 int partition_asc(int* array, int low, int high, Stats* stats);
 int partition_desc(int* array, int low, int high, Stats* stats);
+int mpartition_asc(int* array, int low, int high, Stats* stats);
+int mpartition_desc(int* array, int low, int high, Stats* stats);
 void merge_stats(Stats* s1, Stats* s2);
 Stats* new_stats();
 
@@ -229,12 +231,50 @@ int partition_desc(int* array, int low, int high, Stats* stats) {
   return (i + 1);
 }
 
+int mpartition_asc(int* array, int low, int high, Stats* stats) {
+  int pivot = median(array, (high + 1), stats);
+  int i = (low - 1);
+
+  for (int j = low; j <= (high - 1); j++) {
+    stats->cmp_count += 2; // comparisons in the for loop and the if statement
+    if (array[j] <= pivot) {
+      i++;
+      swap(&array[i], &array[j]);
+      stats->shift_count++;
+    }
+  }
+  stats->cmp_count++; // last comparison while exiting the loop
+  swap(&array[i + 1], &array[high]);
+  stats->shift_count++;
+  
+  return (i + 1);
+}
+
+int mpartition_desc(int* array, int low, int high, Stats* stats) {
+  int pivot = median(array, (high + 1), stats);
+  int i = (low - 1);
+
+  for (int j = low; j <= (high - 1); j++) {
+    stats->cmp_count += 2; // comparisons in the for loop and the if statement
+    if (array[j] >= pivot) {
+      i++;
+      swap(&array[i], &array[j]);
+      stats->shift_count++;
+    }
+  }
+  stats->cmp_count++; // last comparison while exiting the loop
+  swap(&array[i + 1], &array[high]);
+  stats->shift_count++;
+
+  return (i + 1);
+}
+
 void mquick_sort_asc(int* array, int low, int high, Stats* stats) {
   stats->cmp_count++;
   if (low < high) {
     stats->cmp_count++;
     if (high <= 17) merge_stats(stats, insertion_sort_asc(array, high + 1));
-    int partition_index = partition_asc(array, low, high, stats);
+    int partition_index = mpartition_asc(array, low, high, stats);
     mquick_sort_asc(array, low, partition_index - 1, stats);
     mquick_sort_asc(array, partition_index + 1, high, stats);
   }
@@ -245,7 +285,7 @@ void mquick_sort_desc(int* array, int low, int high, Stats* stats) {
   if (low < high) {
     stats->cmp_count++;
     if (high <= 17) merge_stats(stats, insertion_sort_desc(array, high + 1));     
-    int partition_index = partition_desc(array, low, high, stats);
+    int partition_index = mpartition_desc(array, low, high, stats);
     mquick_sort_desc(array, low, partition_index - 1, stats);
     mquick_sort_desc(array, partition_index + 1, high, stats);
   }

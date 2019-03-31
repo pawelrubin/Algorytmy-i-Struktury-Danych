@@ -37,6 +37,7 @@ int main(int argc, char** argv) {
         break;
     }
     print_stats(stats);
+    debug(settings, data);
   } else{
     run_sorts(settings->k, settings->file_name, settings->asc_flag);
   }

@@ -163,3 +163,21 @@ void create_file(char* file_name) {
   fprintf(fptr, "type;size;cmp_count;shift_count;time\n");
   fclose(fptr);
 }
+
+int median(int* array, size_t size, Stats* stats) {
+  int first = array[0];
+  int last = array[size - 1];
+  int middle = array[size / 2];
+  stats->cmp_count++;
+  if (first > last && first < middle) {
+    stats->cmp_count++;    
+    return first;
+  }
+
+  stats->cmp_count++;
+  if (last > first && last < middle) {
+    stats->cmp_count++;
+    return last;
+  }
+  return middle;
+}
