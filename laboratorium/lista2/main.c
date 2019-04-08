@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <string.h>
+#include <time.h>
 #include "sorting.h"
 #include "heap.h"
 #include "tools.h"
@@ -39,7 +40,10 @@ int main(int argc, char** argv) {
     print_stats(stats);
     debug(settings, data);
   } else{
+    clock_t begin = clock();
     run_sorts(settings->k, settings->file_name, settings->asc_flag);
+    clock_t end = clock();
+    printf("%f", (double)(end - begin) / CLOCKS_PER_SEC);
   }
   
   return 0;

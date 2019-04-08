@@ -31,6 +31,7 @@ int mpartition_asc(int* array, int low, int high, Stats* stats);
 int mpartition_desc(int* array, int low, int high, Stats* stats);
 void merge_stats(Stats* s1, Stats* s2);
 Stats* new_stats();
+void minsert_sort_asc(int* array, int begin, int end, Stats* stats);
 
 Stats* select_sort(int* array, size_t size, int asc_flag) {
   Stats* stats = new_stats(size, "select");
@@ -232,7 +233,20 @@ int partition_desc(int* array, int low, int high, Stats* stats) {
 }
 
 int mpartition_asc(int* array, int low, int high, Stats* stats) {
-  int pivot = median(array, (high + 1), stats);
+  int m[] = {array[low], array[(low + high)/2], array[high]};
+  merge_stats(stats, insertion_sort_asc(m, 3));
+  stats->cmp_count++;
+  if (m[1] == array[low]) {
+    stats->shift_count++;
+    swap(&array[low], &array[high]);
+  } else if (m[1] == array[(low + high)/2]) {
+    stats->cmp_count++;
+    stats->shift_count++;
+    swap(&array[(low+high)/2], &array[high]);
+  } else {
+    stats->cmp_count++;
+  }
+  int pivot = array[high];
   int i = (low - 1);
 
   for (int j = low; j <= (high - 1); j++) {
@@ -251,7 +265,20 @@ int mpartition_asc(int* array, int low, int high, Stats* stats) {
 }
 
 int mpartition_desc(int* array, int low, int high, Stats* stats) {
-  int pivot = median(array, (high + 1), stats);
+  int m[] = {array[low], array[(low + high)/2], array[high]};
+  merge_stats(stats, insertion_sort_asc(m, 3));
+  stats->cmp_count++;
+  if (m[1] == array[low]) {
+    stats->shift_count++;
+    swap(&array[low], &array[high]);
+  } else if (m[1] == array[(low + high)/2]) {
+    stats->cmp_count++;
+    stats->shift_count++;
+    swap(&array[(low+high)/2], &array[high]);
+  } else {
+    stats->cmp_count++;
+  }
+  int pivot = array[high];
   int i = (low - 1);
 
   for (int j = low; j <= (high - 1); j++) {
@@ -270,13 +297,16 @@ int mpartition_desc(int* array, int low, int high, Stats* stats) {
 }
 
 void mquick_sort_asc(int* array, int low, int high, Stats* stats) {
-  stats->cmp_count++;
+   stats->cmp_count++;
   if (low < high) {
     stats->cmp_count++;
-    if (high <= 17) merge_stats(stats, insertion_sort_asc(array, high + 1));
-    int partition_index = mpartition_asc(array, low, high, stats);
-    mquick_sort_asc(array, low, partition_index - 1, stats);
-    mquick_sort_asc(array, partition_index + 1, high, stats);
+    if ((high - low) < 16) {
+      minsert_sort_asc(array, low, high + 1, stats);
+    } else {
+      int partition_index = mpartition_asc(array, low, high, stats);
+      mquick_sort_asc(array, low, partition_index - 1, stats);
+      mquick_sort_asc(array, partition_index + 1, high, stats);
+    }
   }
 }
 
@@ -284,10 +314,13 @@ void mquick_sort_desc(int* array, int low, int high, Stats* stats) {
   stats->cmp_count++;
   if (low < high) {
     stats->cmp_count++;
-    if (high <= 17) merge_stats(stats, insertion_sort_desc(array, high + 1));     
-    int partition_index = mpartition_desc(array, low, high, stats);
-    mquick_sort_desc(array, low, partition_index - 1, stats);
-    mquick_sort_desc(array, partition_index + 1, high, stats);
+    if ((high-low) < 16) {
+      minsert_sort_desc(array, low, high + 1, stats);
+    } else {
+      int partition_index = mpartition_desc(array, low, high, stats);
+      mquick_sort_desc(array, low, partition_index - 1, stats);
+      mquick_sort_desc(array, partition_index + 1, high, stats);
+    }
   }
 }
 
@@ -367,4 +400,32 @@ void averagify(Stats* s1, Stats* s2, int n) {
   s1->shift_count += (s2->shift_count - s1->shift_count) / (n + 1);
   s1->time += (s2->time - s1->time) / (n + 1);
   free(s2);
+}
+
+void minsert_sort_asc(int* array, int begin, int end, Stats* stats) {
+  for (int i = begin; i < end; i++) {
+    int j = i;
+    while (j > 0 && array[j-1] > array[j]) {
+      swap(&array[j], &array[j-1]);
+      j--;
+      stats->cmp_count += 2;
+      stats->shift_count++;
+    }
+    stats->cmp_count += 2; // last cmp in while, cmp in for
+  }
+  stats->cmp_count++; 
+}
+
+void minsert_sort_desc(int* array, int begin, int end, Stats* stats) {
+  for (int i = begin; i < end; i++) {
+    int j = i;
+    while (j > 0 && array[j-1] < array[j]) {
+      swap(&array[j], &array[j-1]);
+      j--;
+      stats->cmp_count += 2;
+      stats->shift_count++;
+    }
+    stats->cmp_count += 2; // last cmp in while, cmp in for
+  }
+  stats->cmp_count++; 
 }
