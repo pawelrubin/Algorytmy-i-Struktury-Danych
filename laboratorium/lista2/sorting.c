@@ -32,6 +32,7 @@ int mpartition_desc(int* array, int low, int high, Stats* stats);
 void merge_stats(Stats* s1, Stats* s2);
 Stats* new_stats();
 void minsert_sort_asc(int* array, int begin, int end, Stats* stats);
+void minsert_sort_desc(int* array, int begin, int end, Stats* stats);
 
 Stats* select_sort(int* array, size_t size, int asc_flag) {
   Stats* stats = new_stats(size, "select");
