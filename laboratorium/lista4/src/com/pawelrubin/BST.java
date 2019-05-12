@@ -1,10 +1,7 @@
 package com.pawelrubin;
 
-import java.util.ArrayList;
-
 public class BST<KeyType extends Comparable<KeyType>> {
     private Node<KeyType> root;
-    private ArrayList<Node<KeyType>> nodes = new ArrayList<>();
 
     public BST() {
         root = null;
@@ -34,12 +31,56 @@ public class BST<KeyType extends Comparable<KeyType>> {
         }
     }
 
-    public void walk(Node<KeyType> x) {
+    public void inorderWalk(Node<KeyType> x) {
         if (x != null) {
-            walk(x.getLeft());
+            inorderWalk(x.getLeft());
             System.out.println(x.getKey());
-            walk(x.getRight());
+            inorderWalk(x.getRight());
         }
+    }
+
+    public void transplant(Node<KeyType> u, Node<KeyType> v) {
+        if (u.getParent() == null) {
+            this.root = v;
+        } else if (u == u.getParent().getLeft()) {
+            u.getParent().setLeft(v);
+        } else {
+            u.getParent().setRight(v);
+        }
+        if (v != null) {
+            v.setParent(u.getParent());
+        }
+    }
+
+    public void delete(Node<KeyType> z) {
+        if (z.getLeft() == null) {
+            transplant(z, z.getRight());
+        } else if (z.getRight() == null) {
+            transplant(z, z.getLeft());
+        } else {
+            Node<KeyType> y = minimum(z.getRight());
+            if (y.getParent() != z) {
+                transplant(y, y.getRight());
+                y.setRight(z.getRight());
+                y.getRight().setParent(y);
+            }
+            transplant(z, y);
+            y.setLeft(z.getLeft());
+            y.getLeft().setParent(y);
+        }
+    }
+
+    public void print() {
+        System.out.println();
+        inorderWalk(this.root);
+        System.out.println();
+    }
+
+    public Node<KeyType> minimum(Node<KeyType> x) {
+        while (x.getLeft() != null) {
+            x = x.getRight();
+        }
+        return x;
     }
 
     public Node<KeyType> getRoot() {
