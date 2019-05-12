@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94291f8e-0faa-43c8-a8b1-7b4191a41884" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/pawelrubin/structures/Color.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/pawelrubin/structures/SplayTree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/pawelrubin/structures/StringValidator.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/com/pawelrubin/structures/Tree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lista3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../lista3/.idea/workspace.xml" afterDir="false" />
@@ -22,8 +25,11 @@
       <change beforePath="$PROJECT_DIR$/../lista3/src/graph/GraphEdge.java" beforeDir="false" afterPath="$PROJECT_DIR$/../lista3/src/graph/GraphEdge.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lista3/src/priorityQueue/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/../lista3/src/priorityQueue/Node.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../lista3/src/priorityQueue/PriorityQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/../lista3/src/priorityQueue/PriorityQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/pawelrubin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/pawelrubin/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/pawelrubin/structures/BST.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/pawelrubin/structures/BST.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/pawelrubin/structures/ColorNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/pawelrubin/structures/ColorNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/pawelrubin/structures/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/pawelrubin/structures/Node.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/pawelrubin/structures/RBTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/pawelrubin/structures/RBTree.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -34,105 +40,19 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="25" column="40" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
+            <state relative-caret-position="245">
+              <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2363#2364#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/RBTree.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2217">
-              <caret line="234" column="12" lean-forward="true" selection-start-line="234" selection-start-column="12" selection-end-line="234" selection-end-column="12" />
-              <folding>
-                <element signature="method#insert#0;class#RBTree#0" />
-                <element signature="e#402#558#1" />
-                <element signature="e#459#493#1" />
-                <element signature="e#513#548#1" />
-                <element signature="e#629#662#1" />
-                <element signature="e#697#734#1" />
-                <element signature="e#740#778#1" />
-                <element signature="method#insertFixUp#0;class#RBTree#0" />
-                <element signature="e#1093#2869#1" />
-                <element signature="e#1035#1784#1" />
-                <element signature="e#1161#1400#1" />
-                <element signature="e#1406#1770#1" />
-                <element signature="e#1463#1568#1" />
-                <element signature="e#1790#2537#1" />
-                <element signature="e#1915#2154#1" />
-                <element signature="e#2160#2523#1" />
-                <element signature="e#2216#2322#1" />
-                <element signature="method#rightRotate#0;class#RBTree#0" />
-                <element signature="e#2719#2769#1" />
-                <element signature="e#2841#2879#1" />
-                <element signature="e#2920#2970#1" />
-                <element signature="e#2976#3025#1" />
-                <element signature="method#leftRotate#0;class#RBTree#0" />
-                <element signature="e#3243#3292#1" />
-                <element signature="e#3364#3402#1" />
-                <element signature="e#3442#3491#1" />
-                <element signature="e#3497#3547#1" />
-                <element signature="e#3682#3721#1" />
-                <element signature="method#inorderWalk#0;class#RBTree#0" />
-                <element signature="e#3730#3862#1" />
-                <element signature="e#3989#3990#0" expanded="true" />
-                <element signature="e#4013#4014#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/Tree.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/BST.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="98" column="17" lean-forward="true" selection-start-line="91" selection-start-column="7" selection-end-line="98" selection-end-column="17" />
-              <folding>
-                <element signature="method#insert#0;class#BST#0" />
-                <element signature="e#353#523#1" />
-                <element signature="e#410#458#1" />
-                <element signature="e#464#513#1" />
-                <element signature="e#572#610#1" />
-                <element signature="e#640#677#1" />
-                <element signature="e#683#721#1" />
-                <element signature="method#inorderWalk#0;class#BST#0" />
-                <element signature="e#799#931#1" />
-                <element signature="method#transplant#0;class#BST#0" />
-                <element signature="e#1037#1075#1" />
-                <element signature="e#1115#1164#1" />
-                <element signature="e#1170#1220#1" />
-                <element signature="e#1244#1295#1" />
-                <element signature="method#delete#1;class#BST#0" />
-                <element signature="e#1464#1516#1" />
-                <element signature="e#1548#1599#1" />
-                <element signature="e#1605#1955#1" />
-                <element signature="e#1696#1841#1" />
-                <element signature="method#print#0;class#BST#0" />
-                <element signature="method#search#0;class#BST#0" />
-                <element signature="e#2183#2231#1" />
-                <element signature="e#2237#2285#1" />
+                <element signature="e#1975#1976#0" expanded="true" />
+                <element signature="e#2047#2048#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -141,24 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/ColorNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="16" column="49" lean-forward="true" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
-              <folding>
-                <element signature="e#360#361#0" expanded="true" />
-                <element signature="e#390#391#0" expanded="true" />
-                <element signature="e#498#499#0" expanded="true" />
-                <element signature="e#554#555#0" expanded="true" />
-                <element signature="e#907#908#0" expanded="true" />
-                <element signature="e#982#983#0" expanded="true" />
-                <element signature="e#1052#1053#0" expanded="true" />
-                <element signature="e#1136#1137#0" expanded="true" />
-                <element signature="e#1208#1209#0" expanded="true" />
-                <element signature="e#1296#1297#0" expanded="true" />
-                <element signature="e#1370#1371#0" expanded="true" />
-                <element signature="e#1462#1463#0" expanded="true" />
-                <element signature="e#1524#1525#0" expanded="true" />
-                <element signature="e#1593#1594#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="108">
+              <caret line="28" column="5" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="28" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -169,6 +73,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Enum" />
         <option value="Interface" />
       </list>
     </option>
@@ -176,7 +81,14 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>null</find>
+      <find>nil</find>
+      <find>TreeNode</find>
     </findStrings>
+    <replaceStrings>
+      <replace>nil</replace>
+      <replace>null</replace>
+      <replace>Node&lt;KeyType&gt;</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -189,18 +101,21 @@
         <option value="$PROJECT_DIR$/src/com/pawelrubin/BST.java" />
         <option value="$PROJECT_DIR$/src/com/pawelrubin/RBTree.java" />
         <option value="$PROJECT_DIR$/src/com/pawelrubin/ColorNode.java" />
-        <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/Node.java" />
+        <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/StringValidator.java" />
         <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/ColorNode.java" />
+        <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/Color.java" />
+        <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/Tree.java" />
+        <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/RBTree.java" />
+        <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/SplayTree.java" />
         <option value="$PROJECT_DIR$/src/com/pawelrubin/Main.java" />
         <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/BST.java" />
-        <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/RBTree.java" />
-        <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/Tree.java" />
+        <option value="$PROJECT_DIR$/src/com/pawelrubin/structures/Node.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="745" />
-    <option name="width" value="1182" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="953" />
+    <option name="width" value="974" />
     <option name="height" value="1057" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -252,6 +167,11 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
+  <component name="RecentsManager">
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.pawelrubin.structures" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -264,8 +184,16 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+  <component name="RunManager" selected="Application.SPLAY">
+    <configuration name="BST" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.pawelrubin.Main" />
+      <module name="lista4" />
+      <option name="PROGRAM_PARAMETERS" value="-t bst" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RBT" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.pawelrubin.Main" />
       <module name="lista4" />
       <option name="PROGRAM_PARAMETERS" value="-t rbt" />
@@ -275,9 +203,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="SPLAY" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.pawelrubin.Main" />
+      <module name="lista4" />
+      <option name="PROGRAM_PARAMETERS" value="-t splay" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.BST" />
+      <item itemvalue="Application.RBT" />
+      <item itemvalue="Application.SPLAY" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.RBT" />
       </list>
     </recent_temporary>
   </component>
@@ -291,47 +232,48 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1557658037476</updated>
-      <workItem from="1557658039300" duration="17520000" />
+      <workItem from="1557658039300" duration="19248000" />
+      <workItem from="1557688759940" duration="8650000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17520000" />
+    <option name="totallyTimeSpent" value="27898000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="745" y="0" width="1182" height="1057" extended-state="0" />
+    <frame x="953" y="0" width="974" height="1057" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Designer" />
-      <window_info id="Image Layers" />
-      <window_info id="Capture Tool" />
-      <window_info id="UI Designer" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27094474" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.47155362" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" weight="0.3296582" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.38864142" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3296582" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.58129174" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Maven" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Codota" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3296582" />
+      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info anchor="bottom" id="Version Control" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Codota" order="5" />
+      <window_info anchor="right" id="Capture Analysis" order="6" />
+      <window_info anchor="right" id="Database" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -345,146 +287,250 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/Node.java">
+    <entry file="uml://JAVA/com.pawelrubin.structures">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>com.pawelrubin.structures</OriginalElement>
+          <nodes>
+            <node x="16.65625" y="120.0">com.pawelrubin.structures.ColorNode</node>
+            <node x="425.5" y="210.0">com.pawelrubin.structures.BST</node>
+            <node x="0.0" y="351.0">com.pawelrubin.structures.RBTree</node>
+            <node x="0.0" y="554.0">com.pawelrubin.structures.StringValidator</node>
+            <node x="165.15625" y="0.0">com.pawelrubin.structures.Color</node>
+            <node x="394.0" y="0.0">com.pawelrubin.structures.Node</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="com.pawelrubin.structures.ColorNode" target="com.pawelrubin.structures.Color">
+              <point x="63.0" y="-90.5" />
+              <point x="0.0" y="35.0" />
+            </edge>
+            <edge source="com.pawelrubin.structures.BST" target="com.pawelrubin.structures.Node">
+              <point x="-53.33333333333337" y="-68.5" />
+              <point x="452.16666666666663" y="185.0" />
+              <point x="431.1666666666667" y="185.0" />
+              <point x="-74.33333333333331" y="80.0" />
+            </edge>
+            <edge source="com.pawelrubin.structures.RBTree" target="com.pawelrubin.structures.ColorNode">
+              <point x="-43.625" y="-79.0" />
+              <point x="130.875" y="326.0" />
+              <point x="142.65625" y="326.0" />
+              <point x="0.0" y="90.5" />
+            </edge>
+            <edge source="com.pawelrubin.structures.RBTree" target="com.pawelrubin.structures.Color">
+              <point x="130.875" y="-79.0" />
+              <point x="305.375" y="326.0" />
+              <point x="279.15625" y="326.0" />
+              <point x="279.15625" y="95.0" />
+              <point x="232.65625" y="95.0" />
+              <point x="27.0" y="35.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="140.0" y="124.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+            <Category>Inner Classes</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>public</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/StringValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
+          <folding>
+            <element signature="e#433#434#0" expanded="true" />
+            <element signature="e#497#498#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/Color.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="6" column="39" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
-          <folding>
-            <element signature="e#235#236#0" expanded="true" />
-            <element signature="e#265#266#0" expanded="true" />
-            <element signature="e#296#297#0" expanded="true" />
-            <element signature="e#322#323#0" expanded="true" />
-            <element signature="e#361#362#0" expanded="true" />
-            <element signature="e#391#392#0" expanded="true" />
-            <element signature="e#420#421#0" expanded="true" />
-            <element signature="e#447#448#0" expanded="true" />
-            <element signature="e#485#486#0" expanded="true" />
-            <element signature="e#517#518#0" expanded="true" />
-            <element signature="e#547#548#0" expanded="true" />
-            <element signature="e#575#576#0" expanded="true" />
-            <element signature="e#615#616#0" expanded="true" />
-            <element signature="e#649#650#0" expanded="true" />
-            <element signature="e#680#681#0" expanded="true" />
-            <element signature="e#709#710#0" expanded="true" />
-            <element signature="e#751#752#0" expanded="true" />
-            <element signature="e#787#788#0" expanded="true" />
-            <element signature="e#946#947#0" expanded="true" />
-            <element signature="e#970#971#0" expanded="true" />
-          </folding>
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/ColorNode.java">
+    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/Tree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="16" column="49" lean-forward="true" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
-          <folding>
-            <element signature="e#360#361#0" expanded="true" />
-            <element signature="e#390#391#0" expanded="true" />
-            <element signature="e#498#499#0" expanded="true" />
-            <element signature="e#554#555#0" expanded="true" />
-            <element signature="e#907#908#0" expanded="true" />
-            <element signature="e#982#983#0" expanded="true" />
-            <element signature="e#1052#1053#0" expanded="true" />
-            <element signature="e#1136#1137#0" expanded="true" />
-            <element signature="e#1208#1209#0" expanded="true" />
-            <element signature="e#1296#1297#0" expanded="true" />
-            <element signature="e#1370#1371#0" expanded="true" />
-            <element signature="e#1462#1463#0" expanded="true" />
-            <element signature="e#1524#1525#0" expanded="true" />
-            <element signature="e#1593#1594#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="260">
+          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/BST.java">
+    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/SplayTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="98" column="17" lean-forward="true" selection-start-line="91" selection-start-column="7" selection-end-line="98" selection-end-column="17" />
+        <state relative-caret-position="320">
+          <caret line="152" lean-forward="true" selection-start-line="152" selection-end-line="152" />
           <folding>
-            <element signature="method#insert#0;class#BST#0" />
-            <element signature="e#353#523#1" />
-            <element signature="e#410#458#1" />
-            <element signature="e#464#513#1" />
-            <element signature="e#572#610#1" />
-            <element signature="e#640#677#1" />
-            <element signature="e#683#721#1" />
-            <element signature="method#inorderWalk#0;class#BST#0" />
-            <element signature="e#799#931#1" />
-            <element signature="method#transplant#0;class#BST#0" />
-            <element signature="e#1037#1075#1" />
-            <element signature="e#1115#1164#1" />
-            <element signature="e#1170#1220#1" />
-            <element signature="e#1244#1295#1" />
-            <element signature="method#delete#1;class#BST#0" />
-            <element signature="e#1464#1516#1" />
-            <element signature="e#1548#1599#1" />
-            <element signature="e#1605#1955#1" />
-            <element signature="e#1696#1841#1" />
-            <element signature="method#print#0;class#BST#0" />
-            <element signature="method#search#0;class#BST#0" />
-            <element signature="e#2183#2231#1" />
-            <element signature="e#2237#2285#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="25" column="40" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2363#2364#0" expanded="true" />
+            <element signature="method#searchNode#0;class#SplayTree#0" />
+            <element signature="e#529#615#1" />
+            <element signature="e#573#609#1" />
+            <element signature="method#insert#1;class#SplayTree#0" />
+            <element signature="e#963#1085#1" />
+            <element signature="e#1018#1075#1" />
+            <element signature="method#delete#1;class#SplayTree#0" />
+            <element signature="e#1045#1211#1" />
+            <element signature="e#1150#1201#1" />
+            <element signature="method#splay#0;class#SplayTree#0" />
+            <element signature="e#1557#2127#1" />
+            <element signature="e#1688#1891#1" />
+            <element signature="e#1897#2097#1" />
+            <element signature="e#2165#4805#1" />
+            <element signature="e#2267#2354#1" />
+            <element signature="e#2401#2489#1" />
+            <element signature="e#2495#2577#1" />
+            <element signature="e#2707#3838#1" />
+            <element signature="e#2782#3289#1" />
+            <element signature="e#3295#3800#1" />
+            <element signature="e#3905#4393#1" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/RBTree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2217">
-          <caret line="234" column="12" lean-forward="true" selection-start-line="234" selection-start-column="12" selection-end-line="234" selection-end-column="12" />
+        <state relative-caret-position="420">
+          <caret line="59" column="4" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
           <folding>
             <element signature="method#insert#0;class#RBTree#0" />
-            <element signature="e#402#558#1" />
-            <element signature="e#459#493#1" />
-            <element signature="e#513#548#1" />
-            <element signature="e#629#662#1" />
-            <element signature="e#697#734#1" />
-            <element signature="e#740#778#1" />
+            <element signature="e#428#598#1" />
+            <element signature="e#485#533#1" />
+            <element signature="e#539#588#1" />
+            <element signature="e#648#686#1" />
+            <element signature="e#716#753#1" />
+            <element signature="e#759#797#1" />
+            <element signature="method#print#0;class#RBTree#0" />
+            <element signature="method#search#0;class#RBTree#0" />
+            <element signature="e#1218#1266#1" />
+            <element signature="e#1272#1320#1" />
+            <element signature="method#load#0;class#RBTree#0" />
             <element signature="method#insertFixUp#0;class#RBTree#0" />
-            <element signature="e#1093#2869#1" />
-            <element signature="e#1035#1784#1" />
-            <element signature="e#1161#1400#1" />
-            <element signature="e#1406#1770#1" />
-            <element signature="e#1463#1568#1" />
-            <element signature="e#1790#2537#1" />
-            <element signature="e#1915#2154#1" />
-            <element signature="e#2160#2523#1" />
-            <element signature="e#2216#2322#1" />
+            <element signature="e#1474#3058#1" />
+            <element signature="e#1546#2295#1" />
+            <element signature="e#1672#1911#1" />
+            <element signature="e#1917#2281#1" />
+            <element signature="e#1974#2079#1" />
+            <element signature="e#2301#3048#1" />
+            <element signature="e#2426#2665#1" />
+            <element signature="e#2671#3034#1" />
+            <element signature="e#2727#2833#1" />
             <element signature="method#rightRotate#0;class#RBTree#0" />
-            <element signature="e#2719#2769#1" />
-            <element signature="e#2841#2879#1" />
-            <element signature="e#2920#2970#1" />
-            <element signature="e#2976#3025#1" />
+            <element signature="e#3273#3323#1" />
+            <element signature="e#3396#3434#1" />
+            <element signature="e#3475#3525#1" />
+            <element signature="e#3531#3580#1" />
             <element signature="method#leftRotate#0;class#RBTree#0" />
-            <element signature="e#3243#3292#1" />
-            <element signature="e#3364#3402#1" />
-            <element signature="e#3442#3491#1" />
-            <element signature="e#3497#3547#1" />
-            <element signature="e#3682#3721#1" />
+            <element signature="e#3799#3848#1" />
+            <element signature="e#3921#3959#1" />
+            <element signature="e#3999#4048#1" />
+            <element signature="e#4054#4104#1" />
             <element signature="method#inorderWalk#0;class#RBTree#0" />
-            <element signature="e#3730#3862#1" />
-            <element signature="e#3989#3990#0" expanded="true" />
-            <element signature="e#4013#4014#0" expanded="true" />
+            <element signature="e#4235#4358#1" />
+            <element signature="method#delete#1;class#RBTree#0" />
+            <element signature="e#4557#4639#1" />
+            <element signature="e#4672#4752#1" />
+            <element signature="e#4758#5258#1" />
+            <element signature="e#4908#4955#1" />
+            <element signature="e#4961#5106#1" />
+            <element signature="e#5302#5341#1" />
+            <element signature="method#deleteFixUp#0;class#RBTree#0" />
+            <element signature="e#5464#7751#1" />
+            <element signature="e#5512#6625#1" />
+            <element signature="e#5626#5842#1" />
+            <element signature="e#5944#6045#1" />
+            <element signature="e#6051#6611#1" />
+            <element signature="e#6117#6340#1" />
+            <element signature="e#6631#7741#1" />
+            <element signature="e#6744#6960#1" />
+            <element signature="e#7062#7163#1" />
+            <element signature="e#7169#7727#1" />
+            <element signature="e#7234#7456#1" />
+            <element signature="method#transplant#0;class#RBTree#0" />
+            <element signature="e#7902#7940#1" />
+            <element signature="e#7980#8029#1" />
+            <element signature="e#8035#8085#1" />
+            <element signature="method#minimum#0;class#RBTree#0" />
+            <element signature="e#8228#8268#1" />
+            <element signature="method#recursiveSearch#0;class#RBTree#0" />
+            <element signature="e#8431#8464#1" />
+            <element signature="e#8506#8569#1" />
+            <element signature="e#8575#8639#1" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/Tree.java">
+    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/BST.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        <state relative-caret-position="506">
+          <caret line="67" column="46" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="46" />
+          <folding>
+            <element signature="method#search#0;class#BST#0" />
+            <element signature="e#507#555#1" />
+            <element signature="e#561#609#1" />
+            <element signature="method#print#0;class#BST#0" />
+            <element signature="method#load#0;class#BST#0" />
+            <element signature="method#insert#0;class#BST#0" />
+            <element signature="e#772#942#1" />
+            <element signature="e#829#877#1" />
+            <element signature="e#883#932#1" />
+            <element signature="e#991#1029#1" />
+            <element signature="e#1059#1096#1" />
+            <element signature="e#1102#1140#1" />
+            <element signature="method#inorderWalk#0;class#BST#0" />
+            <element signature="e#1215#1347#1" />
+            <element signature="method#transplant#0;class#BST#0" />
+            <element signature="e#1454#1492#1" />
+            <element signature="e#1532#1581#1" />
+            <element signature="e#1587#1637#1" />
+            <element signature="e#1661#1712#1" />
+            <element signature="method#delete#1;class#BST#0" />
+            <element signature="e#1796#1848#1" />
+            <element signature="e#1880#1931#1" />
+            <element signature="e#1937#2287#1" />
+            <element signature="e#2028#2173#1" />
+            <element signature="method#searchNode#0;class#BST#0" />
+            <element signature="method#minimum#0;class#BST#0" />
+            <element signature="e#2687#2727#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="51" column="68" selection-start-line="51" selection-start-column="68" selection-end-line="51" selection-end-column="68" />
+          <folding>
+            <element signature="e#966#967#0" expanded="true" />
+            <element signature="e#1022#1023#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/structures/ColorNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="28" column="5" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="28" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/pawelrubin/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1975#1976#0" expanded="true" />
+            <element signature="e#2047#2048#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

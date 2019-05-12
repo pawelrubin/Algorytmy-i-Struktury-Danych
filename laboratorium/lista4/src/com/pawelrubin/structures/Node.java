@@ -6,7 +6,7 @@ public class Node<KeyType extends Comparable<KeyType>> implements Comparable<Nod
     private Node<KeyType> right = null;
     private Node<KeyType> parent = null;
 
-    public Node(KeyType key) {
+    Node(KeyType key) {
         this.key = key;
     }
 
@@ -45,5 +45,16 @@ public class Node<KeyType extends Comparable<KeyType>> implements Comparable<Nod
     @Override
     public int compareTo(Node<KeyType> node) {
         return this.key.compareTo(node.getKey());
+    }
+
+    @Override
+    public String toString() {
+        String result = "node: " + this.key.toString() + ", parent: ";
+        if (this.parent != null && this.parent.key != null) {
+            result += this.parent.key;
+        } else {
+            result += "null";
+        }
+        return result;
     }
 }

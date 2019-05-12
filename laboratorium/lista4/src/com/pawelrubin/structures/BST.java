@@ -1,14 +1,46 @@
 package com.pawelrubin.structures;
 
-public class BST<KeyType extends Comparable<KeyType>> {
-    private Node<KeyType> root;
+import java.io.File;
+
+public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
+    protected Node<KeyType> root;
 
     public BST() {
         root = null;
     }
 
-    public void insert(KeyType value) {
-        Node<KeyType> z = new Node<>(value);
+    @Override
+    public void insert(KeyType z) {
+        insert(new Node<>(z));
+    }
+
+    @Override
+    public void delete(KeyType z) {
+        delete(searchNode(root, z));
+    }
+
+    @Override
+    public void search(KeyType value) {
+        if (searchNode(this.root, value) != null) {
+            System.out.println("1");
+        } else {
+            System.out.println("0");
+        }
+    }
+
+    @Override
+    public void inOrder() {
+        System.out.println();
+        inorderWalk(this.root);
+        System.out.println();
+    }
+
+    @Override
+    public void load(File f) {
+        // TODO: implement
+    }
+
+    protected Node<KeyType> insert(Node<KeyType> z) {
         Node<KeyType> y = null;
         Node<KeyType> x = this.root;
 
@@ -29,17 +61,19 @@ public class BST<KeyType extends Comparable<KeyType>> {
         } else {
             y.setRight(z);
         }
+
+        return z;
     }
 
-    public void inorderWalk(Node<KeyType> x) {
+    private void inorderWalk(Node<KeyType> x) {
         if (x != null) {
             inorderWalk(x.getLeft());
-            System.out.println(x.getKey());
+            System.out.println(x);
             inorderWalk(x.getRight());
         }
     }
 
-    public void transplant(Node<KeyType> u, Node<KeyType> v) {
+    protected Node<KeyType> transplant(Node<KeyType> u, Node<KeyType> v) {
         if (u.getParent() == null) {
             this.root = v;
         } else if (u == u.getParent().getLeft()) {
@@ -50,17 +84,14 @@ public class BST<KeyType extends Comparable<KeyType>> {
         if (v != null) {
             v.setParent(u.getParent());
         }
+        return v;
     }
 
-    public void delete(KeyType z) {
-        delete(iterativeSearch(root, z));
-    }
-
-    private void delete(Node<KeyType> z) {
+    protected Node<KeyType> delete(Node<KeyType> z) {
         if (z.getLeft() == null) {
-            transplant(z, z.getRight());
+            return transplant(z, z.getRight());
         } else if (z.getRight() == null) {
-            transplant(z, z.getLeft());
+            return transplant(z, z.getLeft());
         } else {
             Node<KeyType> y = minimum(z.getRight());
             if (y.getParent() != z) {
@@ -71,42 +102,21 @@ public class BST<KeyType extends Comparable<KeyType>> {
             transplant(z, y);
             y.setLeft(z.getLeft());
             y.getLeft().setParent(y);
+            return y;
         }
     }
 
-    public void print() {
-        System.out.println();
-        inorderWalk(this.root);
-        System.out.println();
+    protected Node<KeyType> searchNode(Node<KeyType> node, KeyType s) {
+        if (node == null || s.compareTo(node.getKey()) == 0) return node;
+        if (s.compareTo(node.getKey()) < 0) return searchNode(node.getLeft(), s);
+        else return searchNode(node.getRight(), s);
     }
 
-    public void search(KeyType value) {
-        if (iterativeSearch(this.root, value) != null) {
-            System.out.println("1");
-        } else {
-            System.out.println("0");
-        }
-    }
-
-    public Node<KeyType> iterativeSearch(Node<KeyType> x, KeyType k) {
-        while (x != null && k != x.getKey()) {
-            if (k.compareTo(x.getKey()) < 0) {
-                x = x.getLeft();
-            } else {
-                x = x.getRight();
-            }
-        }
-        return x;
-    }
-
-    public Node<KeyType> minimum(Node<KeyType> x) {
+    protected Node<KeyType> minimum(Node<KeyType> x) {
         while (x.getLeft() != null) {
             x = x.getLeft();
         }
         return x;
     }
 
-    public Node<KeyType> getRoot() {
-        return root;
-    }
 }

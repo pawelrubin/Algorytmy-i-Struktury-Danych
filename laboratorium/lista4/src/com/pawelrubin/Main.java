@@ -2,11 +2,14 @@ package com.pawelrubin;
 
 import com.pawelrubin.structures.BST;
 import com.pawelrubin.structures.RBTree;
+import com.pawelrubin.structures.SplayTree;
+import com.pawelrubin.structures.Tree;
 import com.sun.org.apache.xalan.internal.xsltc.cmdline.getopt.GetOpt;
 
 public class Main {
 
     public static void main(String[] args) {
+        Tree<Integer> tree = null;
         try {
             GetOpt getOpt = new GetOpt(args, "t:");
             int c;
@@ -16,34 +19,17 @@ public class Main {
                     switch (arg) {
                         case "rbt": {
                             System.out.println("Simulating rbt");
-                            RBTree<Integer> rbt = new RBTree<>();
-                            rbt.insert(2137);
-                            rbt.insert(21);
-                            rbt.insert(37);
-                            rbt.insert(69);
-                            rbt.print();
-                            rbt.delete(2137);
-                            rbt.print();
+                            tree = new RBTree<>();
                             break;
                         }
                         case "bst": {
                             System.out.println("Simulating bst");
-                            BST<Integer> bst = new BST<>();
-                            bst.insert(6);
-                            bst.insert(5);
-                            bst.insert(2);
-                            bst.insert(5);
-                            bst.insert(7);
-                            bst.insert(8);
-                            bst.print();
-                            bst.delete(6);
-                            bst.print();
-                            bst.search(6);
-                            bst.search(2);
+                            tree = new BST<>();
                             break;
                         }
                         case "splay": {
                             System.out.println("Simulating splay");
+                            tree = new SplayTree<>();
                             break;
                         }
                         default:
@@ -53,6 +39,17 @@ public class Main {
                     printUsage();
                 }
             }
+            if (tree != null) {
+                tree.insert(21);
+                tree.insert(37);
+                tree.insert(2137);
+                tree.insert(69);
+                tree.insert(420);
+                tree.inOrder();
+                tree.delete(2137);
+                tree.inOrder();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             printUsage();

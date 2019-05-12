@@ -8,7 +8,7 @@ public class ColorNode<KeyType extends Comparable<KeyType>> implements Comparabl
     private ColorNode<KeyType> right = null ;
     private ColorNode<KeyType> parent = null;
 
-    public ColorNode(KeyType key) {
+    ColorNode(KeyType key) {
         this.key = key;
     }
 
@@ -67,9 +67,5 @@ public class ColorNode<KeyType extends Comparable<KeyType>> implements Comparabl
     public void setKey(KeyType key) {
         this.key = key;
     }
-}
 
-enum Color {
-    RED,
-    BLACK
 }

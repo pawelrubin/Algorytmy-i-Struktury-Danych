@@ -1,9 +1,12 @@
 package com.pawelrubin.structures;
 
-public class RBTree<KeyType extends Comparable<KeyType>> {
+import java.io.File;
+
+public class RBTree<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
     private ColorNode<KeyType> guard = new ColorNode<>(null);
     private ColorNode<KeyType> root = guard;
 
+    @Override
     public void insert(KeyType value) {
         ColorNode<KeyType> z = new ColorNode<>(value);
         ColorNode<KeyType> y = guard;
@@ -30,6 +33,32 @@ public class RBTree<KeyType extends Comparable<KeyType>> {
         z.setRight(guard);
         z.setColor(Color.RED);
         insertFixUp(z);
+    }
+
+    @Override
+    public void delete(KeyType z) {
+        delete(recursiveSearch(root, z));
+    }
+
+    @Override
+    public void inOrder() {
+        System.out.println();
+        inorderWalk(this.root);
+        System.out.println();
+    }
+
+    @Override
+    public void search(KeyType value) {
+        if (recursiveSearch(this.root, value) != null) {
+            System.out.println("1");
+        } else {
+            System.out.println("0");
+        }
+    }
+
+    @Override
+    public void load(File f) {
+        // TODO: implement
     }
 
     private void insertFixUp(ColorNode<KeyType> z) {
@@ -108,20 +137,12 @@ public class RBTree<KeyType extends Comparable<KeyType>> {
         x.setParent(y);
     }
 
-    public void print() {
-        inorderWalk(this.root);
-    }
-
     private void inorderWalk(ColorNode<KeyType> x) {
         if (x != guard) {
             inorderWalk(x.getLeft());
             System.out.println(x);
             inorderWalk(x.getRight());
         }
-    }
-
-    public void delete(KeyType z) {
-        delete(recursiveSearch(root, z));
     }
 
     private void delete(ColorNode<KeyType> z) {
@@ -228,7 +249,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> {
         return x;
     }
 
-    public ColorNode<KeyType> recursiveSearch(ColorNode<KeyType> x, KeyType k) {
+    private ColorNode<KeyType> recursiveSearch(ColorNode<KeyType> x, KeyType k) {
         if (x == null || k.compareTo(x.getKey()) == 0) {
             return x;
         }
@@ -237,16 +258,5 @@ public class RBTree<KeyType extends Comparable<KeyType>> {
         } else {
             return recursiveSearch(x.getRight(), k);
         }
-    }
-
-    public ColorNode<KeyType> iterativeSearch(ColorNode<KeyType> x, KeyType k) {
-        while (x != null && k != x.getKey()) {
-            if (k.compareTo(x.getKey()) < 0) {
-                x = x.getLeft();
-            } else {
-                x = x.getRight();
-            }
-        }
-        return x;
     }
 }
