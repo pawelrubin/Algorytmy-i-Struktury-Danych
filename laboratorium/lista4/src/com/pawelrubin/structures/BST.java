@@ -52,7 +52,11 @@ public class BST<KeyType extends Comparable<KeyType>> {
         }
     }
 
-    public void delete(Node<KeyType> z) {
+    public void delete(KeyType z) {
+        delete(iterativeSearch(root, z));
+    }
+
+    private void delete(Node<KeyType> z) {
         if (z.getLeft() == null) {
             transplant(z, z.getRight());
         } else if (z.getRight() == null) {
@@ -97,7 +101,7 @@ public class BST<KeyType extends Comparable<KeyType>> {
 
     public Node<KeyType> minimum(Node<KeyType> x) {
         while (x.getLeft() != null) {
-            x = x.getRight();
+            x = x.getLeft();
         }
         return x;
     }

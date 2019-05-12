@@ -22,6 +22,8 @@ public class Main {
                             rbt.insert(37);
                             rbt.insert(69);
                             rbt.print();
+                            rbt.delete(2137);
+                            rbt.print();
                             break;
                         }
                         case "bst": {
@@ -34,7 +36,7 @@ public class Main {
                             bst.insert(7);
                             bst.insert(8);
                             bst.print();
-                            bst.delete(bst.getRoot());
+                            bst.delete(6);
                             bst.print();
                             bst.search(6);
                             bst.search(2);

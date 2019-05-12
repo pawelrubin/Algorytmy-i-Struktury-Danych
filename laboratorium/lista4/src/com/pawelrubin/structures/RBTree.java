@@ -119,4 +119,134 @@ public class RBTree<KeyType extends Comparable<KeyType>> {
             inorderWalk(x.getRight());
         }
     }
+
+    public void delete(KeyType z) {
+        delete(recursiveSearch(root, z));
+    }
+
+    private void delete(ColorNode<KeyType> z) {
+        ColorNode<KeyType> y = z;
+        Color yOriginalColor = y.getColor();
+        ColorNode<KeyType> x;
+        if (z.getLeft() == guard) {
+            x = z.getRight();
+            transplant(z, z.getRight());
+        } else if (z.getRight() == guard) {
+            x = z.getLeft();
+            transplant(z, z.getLeft());
+        } else {
+            y = minimum(z.getRight());
+            yOriginalColor = y.getColor();
+            x = y.getRight();
+            if (y.getParent() == z) {
+                x.setParent(y);
+            } else {
+                transplant(y, y.getRight());
+                y.setRight(z.getRight());
+                y.getRight().setParent(y);
+            }
+            transplant(z, y);
+            y.setLeft(z.getLeft());
+            y.getLeft().setParent(y);
+            y.setColor(z.getColor());
+        }
+        if (yOriginalColor == Color.BLACK) {
+            deleteFixUp(x);
+        }
+    }
+
+    private void deleteFixUp(ColorNode<KeyType> x) {
+        while (x != this.root && x.getColor() == Color.BLACK) {
+            if (x == x.getParent().getLeft()) {
+                ColorNode<KeyType> w = x.getParent().getRight();
+                if (w.getColor() == Color.RED) {
+                    w.setColor(Color.BLACK);
+                    x.getParent().setColor(Color.RED);
+                    leftRotate(x.getParent());
+                    w = x.getParent().getRight();
+                }
+                if (w.getLeft().getColor() == Color.BLACK && w.getRight().getColor() == Color.BLACK) {
+                    w.setColor(Color.RED);
+                    x = x.getParent();
+                } else {
+                    if (w.getRight().getColor() == Color.BLACK) {
+                        w.getLeft().setColor(Color.BLACK);
+                        w.setColor(Color.RED);
+                        rightRotate(w);
+                        w = x.getParent().getRight();
+                    }
+                    w.setColor(x.getParent().getColor());
+                    x.getParent().setColor(Color.BLACK);
+                    w.getRight().setColor(Color.BLACK);
+                    leftRotate(x.getParent());
+                    x = this.root;
+                }
+            } else {
+                ColorNode<KeyType> w = x.getParent().getLeft();
+                if (w.getColor() == Color.RED) {
+                    w.setColor(Color.BLACK);
+                    x.getParent().setColor(Color.RED);
+                    rightRotate(x.getParent());
+                    w = x.getParent().getLeft();
+                }
+                if (w.getRight().getColor() == Color.BLACK && w.getLeft().getColor() == Color.BLACK) {
+                    w.setColor(Color.RED);
+                    x = x.getParent();
+                } else {
+                    if (w.getLeft().getColor() == Color.BLACK) {
+                        w.getRight().setColor(Color.BLACK);
+                        w.setColor(Color.RED);
+                        leftRotate(w);
+                        w = x.getParent().getLeft();
+                    }
+                    w.setColor(x.getParent().getColor());
+                    x.getParent().setColor(Color.BLACK);
+                    w.getLeft().setColor(Color.BLACK);
+                    rightRotate(x.getParent());
+                    x = this.root;
+                }
+            }
+        }
+        x.setColor(Color.BLACK);
+    }
+
+    private void transplant(ColorNode<KeyType> u, ColorNode<KeyType> v) {
+        if (u.getParent() == guard) {
+            this.root = v;
+        } else if (u == u.getParent().getLeft()) {
+            u.getParent().setLeft(v);
+        } else {
+            u.getParent().setRight(v);
+        }
+        v.setParent(u.getParent());
+    }
+
+    public ColorNode<KeyType> minimum(ColorNode<KeyType> x) {
+        while (x.getLeft() != guard) {
+            x = x.getLeft();
+        }
+        return x;
+    }
+
+    public ColorNode<KeyType> recursiveSearch(ColorNode<KeyType> x, KeyType k) {
+        if (x == null || k.compareTo(x.getKey()) == 0) {
+            return x;
+        }
+        if (k.compareTo(x.getKey()) < 0) {
+            return recursiveSearch(x.getLeft(), k);
+        } else {
+            return recursiveSearch(x.getRight(), k);
+        }
+    }
+
+    public ColorNode<KeyType> iterativeSearch(ColorNode<KeyType> x, KeyType k) {
+        while (x != null && k != x.getKey()) {
+            if (k.compareTo(x.getKey()) < 0) {
+                x = x.getLeft();
+            } else {
+                x = x.getRight();
+            }
+        }
+        return x;
+    }
 }
