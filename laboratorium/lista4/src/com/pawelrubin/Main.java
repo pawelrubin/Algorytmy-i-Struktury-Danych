@@ -18,6 +18,14 @@ public class Main {
                         }
                         case "bst": {
                             System.out.println("Simulating bst");
+                            BST<Integer> bst = new BST<>();
+                            bst.insert(2);
+                            bst.insert(5);
+                            bst.insert(5);
+                            bst.insert(6);
+                            bst.insert(7);
+                            bst.insert(8);
+                            bst.walk(bst.getRoot());
                             break;
                         }
                         case "splay": {
