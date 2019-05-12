@@ -1,4 +1,4 @@
-package com.pawelrubin;
+package com.pawelrubin.structures;
 
 public class BST<KeyType extends Comparable<KeyType>> {
     private Node<KeyType> root;
@@ -74,6 +74,25 @@ public class BST<KeyType extends Comparable<KeyType>> {
         System.out.println();
         inorderWalk(this.root);
         System.out.println();
+    }
+
+    public void search(KeyType value) {
+        if (iterativeSearch(this.root, value) != null) {
+            System.out.println("1");
+        } else {
+            System.out.println("0");
+        }
+    }
+
+    public Node<KeyType> iterativeSearch(Node<KeyType> x, KeyType k) {
+        while (x != null && k != x.getKey()) {
+            if (k.compareTo(x.getKey()) < 0) {
+                x = x.getLeft();
+            } else {
+                x = x.getRight();
+            }
+        }
+        return x;
     }
 
     public Node<KeyType> minimum(Node<KeyType> x) {

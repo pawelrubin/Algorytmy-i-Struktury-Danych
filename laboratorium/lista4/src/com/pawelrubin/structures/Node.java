@@ -1,10 +1,10 @@
-package com.pawelrubin;
+package com.pawelrubin.structures;
 
 public class Node<KeyType extends Comparable<KeyType>> implements Comparable<Node<KeyType>> {
     private KeyType key;
-    private Node<KeyType> left;
-    private Node<KeyType> right;
-    private Node<KeyType> parent;
+    private Node<KeyType> left = null;
+    private Node<KeyType> right = null;
+    private Node<KeyType> parent = null;
 
     public Node(KeyType key) {
         this.key = key;

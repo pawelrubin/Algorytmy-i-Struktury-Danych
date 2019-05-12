@@ -1,5 +1,7 @@
 package com.pawelrubin;
 
+import com.pawelrubin.structures.BST;
+import com.pawelrubin.structures.RBTree;
 import com.sun.org.apache.xalan.internal.xsltc.cmdline.getopt.GetOpt;
 
 public class Main {
@@ -14,6 +16,12 @@ public class Main {
                     switch (arg) {
                         case "rbt": {
                             System.out.println("Simulating rbt");
+                            RBTree<Integer> rbt = new RBTree<>();
+                            rbt.insert(2137);
+                            rbt.insert(21);
+                            rbt.insert(37);
+                            rbt.insert(69);
+                            rbt.print();
                             break;
                         }
                         case "bst": {
@@ -28,6 +36,8 @@ public class Main {
                             bst.print();
                             bst.delete(bst.getRoot());
                             bst.print();
+                            bst.search(6);
+                            bst.search(2);
                             break;
                         }
                         case "splay": {
@@ -42,6 +52,7 @@ public class Main {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             printUsage();
             System.exit(1);
         }
