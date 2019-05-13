@@ -48,17 +48,17 @@ public class RBTree<KeyType extends Comparable<KeyType>> implements Tree<KeyType
     }
 
     @Override
+    public boolean isEmpty() {
+        return root == guard;
+    }
+
+    @Override
     public void search(KeyType value) {
         if (recursiveSearch(this.root, value) != null) {
             System.out.println("1");
         } else {
             System.out.println("0");
         }
-    }
-
-    @Override
-    public void load(File f) {
-        // TODO: implement
     }
 
     private void insertFixUp(ColorNode<KeyType> z) {

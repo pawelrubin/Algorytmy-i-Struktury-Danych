@@ -1,6 +1,6 @@
 package com.pawelrubin.structures;
 
-import java.io.File;
+import java.util.Stack;
 
 public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
     protected Node<KeyType> root;
@@ -36,8 +36,8 @@ public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
     }
 
     @Override
-    public void load(File f) {
-        // TODO: implement
+    public boolean isEmpty() {
+        return root == null;
     }
 
     protected Node<KeyType> insert(Node<KeyType> z) {
@@ -66,11 +66,28 @@ public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
     }
 
     private void inorderWalk(Node<KeyType> x) {
-        if (x != null) {
-            inorderWalk(x.getLeft());
-            System.out.println(x);
-            inorderWalk(x.getRight());
+        if (x == null) return;
+
+        Stack<Node<KeyType>> s = new Stack<>();
+        Node<KeyType> curr = x;
+        while (curr != null || s.size() > 0) {
+            while (curr != null) {
+                s.push(curr);
+                curr = curr.getLeft();
+            }
+
+            curr = s.pop();
+
+            System.out.println(curr);
+
+            curr = curr.getRight();
         }
+//        recursive:
+//        if (x != null) {
+//            inorderWalk(x.getLeft());
+//            System.out.println(x);
+//            inorderWalk(x.getRight());
+//        }
     }
 
     protected Node<KeyType> transplant(Node<KeyType> u, Node<KeyType> v) {
