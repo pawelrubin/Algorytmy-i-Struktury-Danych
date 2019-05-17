@@ -41,7 +41,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
     @Override
     public void delete(KeyType z) {
         ColorNode<KeyType> toDelete = searchNode(root, z);
-        if (toDelete != guard) delete(toDelete);
+        if (toDelete != guard ) deleteNode(toDelete);
     }
 
     @Override
@@ -78,6 +78,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                     z.getParent().getParent().setColor(Color.RED);
                     z = z.getParent().getParent();
                 } else {
+                    cmp_count++;
                     if (z == z.getParent().getRight()) {
                         z = z.getParent();
                         leftRotate(z);
@@ -161,7 +162,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
         }
     }
 
-    private void delete(ColorNode<KeyType> z) {
+    private void deleteNode(ColorNode<KeyType> z) {
         ColorNode<KeyType> y = z;
         Color yOriginalColor = y.getColor();
         ColorNode<KeyType> x;
@@ -285,7 +286,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
 
     private ColorNode<KeyType> searchNode(ColorNode<KeyType> node, KeyType key) {
         cmp_count += 2;
-        while (node != guard && key.compareTo(node.getKey()) == 0) {
+        while (node != guard && key.compareTo(node.getKey()) != 0) {
             cmp_count += 3;
             if (key.compareTo(node.getKey()) < 0) {
                 node = node.getLeft();

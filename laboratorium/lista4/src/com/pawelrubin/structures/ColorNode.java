@@ -19,7 +19,10 @@ public class ColorNode<KeyType extends Comparable<KeyType>> implements Comparabl
 
     @Override
     public String toString() {
-        String result = this.key.toString() + " " + this.color.toString();
+
+        String result = "";
+        result += this.key == null ? "null " : this.key.toString() + " ";
+        result += this.color == null ? "null" : this.color.toString();
         if (this.parent != null && this.parent.key != null) {
             result += " " + this.parent.key + " " + this.color;
         } else {

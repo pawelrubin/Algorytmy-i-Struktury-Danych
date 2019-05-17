@@ -51,8 +51,8 @@ public abstract class Tree<KeyType extends Comparable<KeyType>> {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] split = line.split(" ");
                 for (String s : split) {
-                    KeyType toInsert = validator.fix((KeyType) s);
-                    if (toInsert != null) delete(toInsert);
+                    KeyType toDelete = validator.fix((KeyType) s);
+                    if (toDelete != null) delete(toDelete);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -72,8 +72,8 @@ public abstract class Tree<KeyType extends Comparable<KeyType>> {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] split = line.split(" ");
                 for (String s : split) {
-                    KeyType toInsert = validator.fix((KeyType) s);
-                    if (toInsert != null) search(toInsert);
+                    KeyType toSearch = validator.fix((KeyType) s);
+                    if (toSearch != null) search(toSearch);
                 }
             }
         } catch (FileNotFoundException e) {

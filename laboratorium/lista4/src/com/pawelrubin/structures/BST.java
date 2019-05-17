@@ -135,7 +135,7 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
 
     protected Node<KeyType> searchNode(Node<KeyType> node, KeyType key) {
         cmp_count += 2;
-        while (node != null && key.compareTo(node.getKey()) == 0) {
+        while (node != null && key.compareTo(node.getKey()) != 0) {
             cmp_count += 3;
             if (key.compareTo(node.getKey()) < 0) {
                 node = node.getLeft();
