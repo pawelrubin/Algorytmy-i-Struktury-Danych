@@ -3,7 +3,14 @@ package com.pawelrubin;
 import com.pawelrubin.structures.*;
 import com.sun.org.apache.xalan.internal.xsltc.cmdline.getopt.GetOpt;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.constants.AsmConstants.S;
+import static jdk.nashorn.internal.runtime.regexp.joni.constants.AsmConstants.STR;
 
 public class Main {
 
@@ -72,32 +79,37 @@ public class Main {
                             System.out.println(duration);
                             break;
                         }
+                        case "unload": {
+                            if (words.length != 2) {
+                                printOptions();
+                                break;
+                            }
+                            long start = System.nanoTime();
+                            tree.unload("src/com/pawelrubin/data/" + words[1] + ".txt");
+                            long end = System.nanoTime();
+                            double duration = (end - start) / NANO_TO_SEC;
+                            System.out.println(duration);
+                            break;
+                        }
                         case "inorder": {
                             tree.inOrder();
                             break;
                         }
                         case "clear": {
-                            switch (treeType) {
-                                case "rbt": {
-                                    System.out.println("Simulating rbt");
-                                    tree = new RBTree<>();
-                                    break;
-                                }
-                                case "bst": {
-                                    System.out.println("Simulating bst");
-                                    tree = new BST<>();
-                                    break;
-                                }
-                                case "splay": {
-                                    System.out.println("Simulating splay");
-                                    tree = new SplayTree<>();
-                                    break;
-                                }
-                            }
+                            tree = clearTree(treeType);
                             break;
                         }
                         case "exit": {
                             System.exit(0);
+                        }
+                        case "test": {
+                            if (words.length != 2) {
+                                printOptions();
+                                break;
+                            }
+                            tree = clearTree(treeType);
+                            runTests(tree, Integer.valueOf(words[1]));
+                            break;
                         }
                         default: {
                             printOptions();
@@ -139,5 +151,63 @@ public class Main {
         tree.inOrder();
         tree.delete(2137);
         tree.inOrder();
+    }
+
+    private static void runTests(Tree<String> tree, int numOfTests) throws IOException {
+        String treeType = tree.getClass().getSimpleName();
+        String[] fileNames = {"aspell", "kjb", "lotr", "sample"};
+        for (String fileName : fileNames) {
+            File file = new File("src/tests/" + treeType + "_" + fileName + ".csv");
+
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.append(
+                    "insert_time;insert_cmp_count;insert_modified_nodes;" +
+                    "search_time;search_cmp_count;search_modified_nodes;" +
+                    "delete_time;delete_cmp_count;delete_modified_nodes\n"
+            );
+            long start, end;
+            for (int i = 0; i < numOfTests; i++) {
+                tree.cmp_count = 0;
+                start = System.nanoTime();
+                tree.load("src/com/pawelrubin/data/" + fileName + ".txt");
+                end = System.nanoTime();
+
+                fileWriter.append(String.valueOf((end - start) / NANO_TO_SEC)).append(";");
+                fileWriter.append(String.valueOf(tree.cmp_count)).append(";");
+                fileWriter.append("0;");
+
+                tree.cmp_count = 0;
+                start = System.nanoTime();
+                tree.searchLoaded("src/com/pawelrubin/data/" + fileName + ".txt");
+                end = System.nanoTime();
+
+                fileWriter.append(String.valueOf((end - start) / NANO_TO_SEC)).append(";");
+                fileWriter.append(String.valueOf(tree.cmp_count)).append(";");
+                fileWriter.append("0;");
+
+                tree.cmp_count = 0;
+                start = System.nanoTime();
+                tree.unload("src/com/pawelrubin/data/" + fileName + ".txt");
+                end = System.nanoTime();
+
+                fileWriter.append(String.valueOf((end - start) / NANO_TO_SEC)).append(";");
+                fileWriter.append(String.valueOf(tree.cmp_count)).append(";");
+                fileWriter.append("0;");
+
+                fileWriter.append("\n");
+            }
+            fileWriter.flush();
+            fileWriter.close();
+        }
+        System.out.println("Tests done");
+    }
+
+    private static Tree<String> clearTree(String treeType) {
+        switch (treeType) {
+            case "rbt": return new RBTree<>();
+            case "bst": return new BST<>();
+            case "splay": return new SplayTree<>();
+            default: return null;
+        }
     }
 }

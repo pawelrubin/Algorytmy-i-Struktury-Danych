@@ -4,19 +4,24 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface Tree<KeyType extends Comparable<KeyType>> {
-    void insert(KeyType value);
+public abstract class Tree<KeyType extends Comparable<KeyType>> {
 
-    void delete(KeyType value);
+    public int cmp_count = 0;
 
-    void search(KeyType value);
+    public abstract void insert(KeyType value);
 
-    void inOrder();
+    public abstract void delete(KeyType value);
 
-    boolean isEmpty();
+    public abstract void search(KeyType value);
 
-    default void load(KeyType fileName) {
+    public abstract void inOrder();
+
+    abstract boolean isEmpty();
+
+    public void load(KeyType fileName) {
         try {
             FileReader fileReader = new FileReader((String) fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -30,6 +35,49 @@ public interface Tree<KeyType extends Comparable<KeyType>> {
                 }
             }
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("File not found...");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void unload(KeyType fileName) {
+        try {
+            FileReader fileReader = new FileReader((String) fileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            Validator<KeyType> validator = new Validator<>();
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] split = line.split(" ");
+                for (String s : split) {
+                    KeyType toInsert = validator.fix((KeyType) s);
+                    if (toInsert != null) delete(toInsert);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("File not found...");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void searchLoaded(KeyType fileName) {
+        try {
+            FileReader fileReader = new FileReader((String) fileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            Validator<KeyType> validator = new Validator<>();
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] split = line.split(" ");
+                for (String s : split) {
+                    KeyType toInsert = validator.fix((KeyType) s);
+                    if (toInsert != null) search(toInsert);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
             System.out.println("File not found...");
         } catch (IOException e) {
             e.printStackTrace();

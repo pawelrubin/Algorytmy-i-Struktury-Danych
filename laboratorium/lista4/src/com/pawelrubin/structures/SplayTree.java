@@ -1,6 +1,6 @@
 package com.pawelrubin.structures;
 
-public class SplayTree<KeyType extends Comparable<KeyType>> extends BST<KeyType> implements Tree<KeyType> {
+public class SplayTree<KeyType extends Comparable<KeyType>> extends BST<KeyType> {
 
     @Override
     protected Node<KeyType> searchNode(Node<KeyType> x, KeyType k) {

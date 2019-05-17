@@ -1,8 +1,9 @@
 package com.pawelrubin.structures;
 
+import java.security.Key;
 import java.util.Stack;
 
-public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
+public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
     protected Node<KeyType> root;
 
     public BST() {
@@ -16,7 +17,8 @@ public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
 
     @Override
     public void delete(KeyType z) {
-        delete(searchNode(root, z));
+        Node<KeyType> toDelete = searchNode(root, z);
+        if (toDelete != null) delete(toDelete);
     }
 
     @Override
@@ -44,8 +46,10 @@ public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
         Node<KeyType> y = null;
         Node<KeyType> x = this.root;
 
+        cmp_count++;
         while (x != null) {
             y = x;
+            cmp_count += 2;
             if (z.compareTo(x) < 0) {
                 x = x.getLeft();
             } else {
@@ -54,11 +58,15 @@ public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
         }
 
         z.setParent(y);
+
+        cmp_count++;
         if (y == null) {
             this.root = z;
         } else if (z.compareTo(y) < 0) {
+            cmp_count++;
             y.setLeft(z);
         } else {
+            cmp_count++;
             y.setRight(z);
         }
 
@@ -82,22 +90,20 @@ public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
 
             curr = curr.getRight();
         }
-//        recursive:
-//        if (x != null) {
-//            inorderWalk(x.getLeft());
-//            System.out.println(x);
-//            inorderWalk(x.getRight());
-//        }
     }
 
     protected Node<KeyType> transplant(Node<KeyType> u, Node<KeyType> v) {
+        cmp_count++;
         if (u.getParent() == null) {
             this.root = v;
         } else if (u == u.getParent().getLeft()) {
+            cmp_count++;
             u.getParent().setLeft(v);
         } else {
+            cmp_count++;
             u.getParent().setRight(v);
         }
+        cmp_count++;
         if (v != null) {
             v.setParent(u.getParent());
         }
@@ -105,12 +111,16 @@ public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
     }
 
     protected Node<KeyType> delete(Node<KeyType> z) {
+        cmp_count++;
         if (z.getLeft() == null) {
             return transplant(z, z.getRight());
         } else if (z.getRight() == null) {
+            cmp_count++;
             return transplant(z, z.getLeft());
         } else {
+            cmp_count++;
             Node<KeyType> y = minimum(z.getRight());
+            cmp_count++;
             if (y.getParent() != z) {
                 transplant(y, y.getRight());
                 y.setRight(z.getRight());
@@ -123,14 +133,23 @@ public class BST<KeyType extends Comparable<KeyType>> implements Tree<KeyType> {
         }
     }
 
-    protected Node<KeyType> searchNode(Node<KeyType> node, KeyType s) {
-        if (node == null || s.compareTo(node.getKey()) == 0) return node;
-        if (s.compareTo(node.getKey()) < 0) return searchNode(node.getLeft(), s);
-        else return searchNode(node.getRight(), s);
+    protected Node<KeyType> searchNode(Node<KeyType> node, KeyType key) {
+        cmp_count += 2;
+        while (node != null && key.compareTo(node.getKey()) == 0) {
+            cmp_count += 3;
+            if (key.compareTo(node.getKey()) < 0) {
+                node = node.getLeft();
+            } else {
+                node = node.getRight();
+            }
+        }
+        return  node;
     }
 
     protected Node<KeyType> minimum(Node<KeyType> x) {
+        cmp_count++;
         while (x.getLeft() != null) {
+            cmp_count++;
             x = x.getLeft();
         }
         return x;
