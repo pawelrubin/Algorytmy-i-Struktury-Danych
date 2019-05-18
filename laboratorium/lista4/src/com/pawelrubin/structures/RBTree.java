@@ -21,17 +21,22 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
             }
         }
 
+        modifications++;
         z.setParent(y);
         cmp_count++;
         if (y == guard) {
+            modifications++;
             this.root = z;
         } else if (z.compareTo(y) < 0) {
             cmp_count++;
+            modifications++;
             y.setLeft(z);
         } else {
             cmp_count++;
+            modifications++;
             y.setRight(z);
         }
+        modifications += 3;
         z.setLeft(guard);
         z.setRight(guard);
         z.setColor(Color.RED);
@@ -73,6 +78,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                 ColorNode<KeyType> y = z.getParent().getParent().getRight();
                 cmp_count++;
                 if (y.getColor() == Color.RED) {
+                    modifications += 3;
                     z.getParent().setColor(Color.BLACK);
                     y.setColor(Color.BLACK);
                     z.getParent().getParent().setColor(Color.RED);
@@ -83,6 +89,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                         z = z.getParent();
                         leftRotate(z);
                     }
+                    modifications += 2;
                     z.getParent().setColor(Color.BLACK);
                     z.getParent().getParent().setColor(Color.RED);
                     rightRotate(z.getParent().getParent());
@@ -91,6 +98,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                 ColorNode<KeyType> y = z.getParent().getParent().getLeft();
                 cmp_count++;
                 if (y.getColor() == Color.RED) {
+                    modifications += 3;
                     z.getParent().setColor(Color.BLACK);
                     y.setColor(Color.BLACK);
                     z.getParent().getParent().setColor(Color.RED);
@@ -101,55 +109,71 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                         z = z.getParent();
                         rightRotate(z);
                     }
+                    modifications += 2;
                     z.getParent().setColor(Color.BLACK);
                     z.getParent().getParent().setColor(Color.RED);
                     leftRotate(z.getParent().getParent());
                 }
             }
         }
+        modifications++;
         this.root.setColor(Color.BLACK);
     }
 
     private void rightRotate(ColorNode<KeyType> y) {
         ColorNode<KeyType> x = y.getLeft();
+        modifications++;
         y.setLeft(x.getRight());
         cmp_count++;
         if (x.getRight() != guard) {
+            modifications++;
             x.getRight().setParent(y);
         }
+        modifications++;
         x.setParent(y.getParent());
         cmp_count++;
         if (y.getParent() == guard) {
+            modifications++;
             this.root = x;
         } else if (y == y.getParent().getRight()) {
             cmp_count++;
+            modifications++;
             y.getParent().setRight(x);
         } else {
             cmp_count++;
+            modifications++;
             y.getParent().setLeft(x);
         }
+        modifications += 2;
         x.setRight(y);
         y.setParent(x);
     }
 
     private void leftRotate(ColorNode<KeyType> x) {
         ColorNode<KeyType> y = x.getRight();
+        modifications++;
         x.setRight(y.getLeft());
         cmp_count++;
         if (y.getLeft() != guard) {
+            modifications++;
             y.getLeft().setParent(x);
         }
+        modifications++;
         y.setParent(x.getParent());
         cmp_count++;
         if (x.getParent() == guard) {
+            modifications++;
             this.root = y;
         } else if (x == x.getParent().getLeft()) {
             cmp_count++;
+            modifications++;
             x.getParent().setLeft(y);
         } else {
             cmp_count++;
+            modifications++;
             x.getParent().setRight(y);
         }
+        modifications += 2;
         y.setLeft(x);
         x.setParent(y);
     }
@@ -181,13 +205,16 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
             x = y.getRight();
             cmp_count ++;
             if (y.getParent() == z) {
+                modifications++;
                 x.setParent(y);
             } else {
                 transplant(y, y.getRight());
+                modifications += 2;
                 y.setRight(z.getRight());
                 y.getRight().setParent(y);
             }
             transplant(z, y);
+            modifications += 3;
             y.setLeft(z.getLeft());
             y.getLeft().setParent(y);
             y.setColor(z.getColor());
@@ -206,6 +233,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                 ColorNode<KeyType> w = x.getParent().getRight();
                 cmp_count++;
                 if (w.getColor() == Color.RED) {
+                    modifications += 2;
                     w.setColor(Color.BLACK);
                     x.getParent().setColor(Color.RED);
                     leftRotate(x.getParent());
@@ -213,16 +241,19 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                 }
                 cmp_count += 2;
                 if (w.getLeft().getColor() == Color.BLACK && w.getRight().getColor() == Color.BLACK) {
+                    modifications++;
                     w.setColor(Color.RED);
                     x = x.getParent();
                 } else {
                     cmp_count ++;
                     if (w.getRight().getColor() == Color.BLACK) {
+                        modifications += 2;
                         w.getLeft().setColor(Color.BLACK);
                         w.setColor(Color.RED);
                         rightRotate(w);
                         w = x.getParent().getRight();
                     }
+                    modifications += 3;
                     w.setColor(x.getParent().getColor());
                     x.getParent().setColor(Color.BLACK);
                     w.getRight().setColor(Color.BLACK);
@@ -233,6 +264,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                 ColorNode<KeyType> w = x.getParent().getLeft();
                 cmp_count ++;
                 if (w.getColor() == Color.RED) {
+                    modifications += 2;
                     w.setColor(Color.BLACK);
                     x.getParent().setColor(Color.RED);
                     rightRotate(x.getParent());
@@ -240,16 +272,19 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                 }
                 cmp_count ++;
                 if (w.getRight().getColor() == Color.BLACK && w.getLeft().getColor() == Color.BLACK) {
+                    modifications++;
                     w.setColor(Color.RED);
                     x = x.getParent();
                 } else {
                     cmp_count ++;
                     if (w.getLeft().getColor() == Color.BLACK) {
+                        modifications += 2;
                         w.getRight().setColor(Color.BLACK);
                         w.setColor(Color.RED);
                         leftRotate(w);
                         w = x.getParent().getLeft();
                     }
+                    modifications += 3;
                     w.setColor(x.getParent().getColor());
                     x.getParent().setColor(Color.BLACK);
                     w.getLeft().setColor(Color.BLACK);
@@ -258,20 +293,25 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                 }
             }
         }
+        modifications++;
         x.setColor(Color.BLACK);
     }
 
     private void transplant(ColorNode<KeyType> u, ColorNode<KeyType> v) {
         cmp_count++;
         if (u.getParent() == guard) {
+            modifications++;
             this.root = v;
         } else if (u == u.getParent().getLeft()) {
             cmp_count++;
+            modifications++;
             u.getParent().setLeft(v);
         } else {
             cmp_count++;
+            modifications++;
             u.getParent().setRight(v);
         }
+        modifications++;
         v.setParent(u.getParent());
     }
 

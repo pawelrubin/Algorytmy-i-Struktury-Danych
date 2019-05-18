@@ -1,6 +1,5 @@
 package com.pawelrubin.structures;
 
-import java.security.Key;
 import java.util.Stack;
 
 public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
@@ -57,16 +56,20 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
             }
         }
 
+        modifications++;
         z.setParent(y);
 
         cmp_count++;
         if (y == null) {
+            modifications++;
             this.root = z;
         } else if (z.compareTo(y) < 0) {
             cmp_count++;
+            modifications++;
             y.setLeft(z);
         } else {
             cmp_count++;
+            modifications++;
             y.setRight(z);
         }
 
@@ -95,16 +98,20 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
     protected Node<KeyType> transplant(Node<KeyType> u, Node<KeyType> v) {
         cmp_count++;
         if (u.getParent() == null) {
+            modifications++;
             this.root = v;
         } else if (u == u.getParent().getLeft()) {
             cmp_count++;
+            modifications++;
             u.getParent().setLeft(v);
         } else {
             cmp_count++;
+            modifications++;
             u.getParent().setRight(v);
         }
         cmp_count++;
         if (v != null) {
+            modifications++;
             v.setParent(u.getParent());
         }
         return v;
@@ -123,10 +130,12 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
             cmp_count++;
             if (y.getParent() != z) {
                 transplant(y, y.getRight());
+                modifications += 2;
                 y.setRight(z.getRight());
                 y.getRight().setParent(y);
             }
             transplant(z, y);
+            modifications += 2;
             y.setLeft(z.getLeft());
             y.getLeft().setParent(y);
             return y;
@@ -143,7 +152,7 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
                 node = node.getRight();
             }
         }
-        return  node;
+        return node;
     }
 
     protected Node<KeyType> minimum(Node<KeyType> x) {

@@ -24,7 +24,7 @@ public class ColorNode<KeyType extends Comparable<KeyType>> implements Comparabl
         result += this.key == null ? "null " : this.key.toString() + " ";
         result += this.color == null ? "null" : this.color.toString();
         if (this.parent != null && this.parent.key != null) {
-            result += " " + this.parent.key + " " + this.color;
+            result += " " + this.parent.key + " " + this.parent.color;
         } else {
             result += " null";
         }

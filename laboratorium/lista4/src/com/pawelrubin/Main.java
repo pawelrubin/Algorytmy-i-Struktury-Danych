@@ -167,32 +167,32 @@ public class Main {
             );
             long start, end;
             for (int i = 0; i < numOfTests; i++) {
-                tree.cmp_count = 0;
+                tree.resetCounters();
                 start = System.nanoTime();
                 tree.load("src/com/pawelrubin/data/" + fileName + ".txt");
                 end = System.nanoTime();
 
                 fileWriter.append(String.valueOf((end - start) / NANO_TO_SEC)).append(";");
-                fileWriter.append(String.valueOf(tree.cmp_count)).append(";");
-                fileWriter.append("0;");
+                fileWriter.append(String.valueOf(tree.getCmp_count())).append(";");
+                fileWriter.append(String.valueOf(tree.getModifications())).append(";");
 
-                tree.cmp_count = 0;
+                tree.resetCounters();
                 start = System.nanoTime();
                 tree.searchLoaded("src/com/pawelrubin/data/" + fileName + ".txt");
                 end = System.nanoTime();
 
                 fileWriter.append(String.valueOf((end - start) / NANO_TO_SEC)).append(";");
-                fileWriter.append(String.valueOf(tree.cmp_count)).append(";");
-                fileWriter.append("0;");
+                fileWriter.append(String.valueOf(tree.getCmp_count())).append(";");
+                fileWriter.append(String.valueOf(tree.getModifications())).append(";");
 
-                tree.cmp_count = 0;
+                tree.resetCounters();
                 start = System.nanoTime();
                 tree.unload("src/com/pawelrubin/data/" + fileName + ".txt");
                 end = System.nanoTime();
 
                 fileWriter.append(String.valueOf((end - start) / NANO_TO_SEC)).append(";");
-                fileWriter.append(String.valueOf(tree.cmp_count)).append(";");
-                fileWriter.append("0;");
+                fileWriter.append(String.valueOf(tree.getCmp_count())).append(";");
+                fileWriter.append(String.valueOf(tree.getModifications())).append(";");
 
                 fileWriter.append("\n");
             }
