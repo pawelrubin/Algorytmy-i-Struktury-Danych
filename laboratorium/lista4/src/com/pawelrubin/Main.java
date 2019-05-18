@@ -91,6 +91,18 @@ public class Main {
                             System.out.println(duration);
                             break;
                         }
+                        case "loadSearch": {
+                            if (words.length != 2) {
+                                printOptions();
+                                break;
+                            }
+                            long start = System.nanoTime();
+                            tree.searchLoaded("src/com/pawelrubin/data/" + words[1] + ".txt");
+                            long end = System.nanoTime();
+                            double duration = (end - start) / NANO_TO_SEC;
+                            System.out.println(duration);
+                            break;
+                        }
                         case "inorder": {
                             tree.inOrder();
                             break;
@@ -130,7 +142,7 @@ public class Main {
     }
 
     private static void printOptions() {
-        System.out.println("[insert s | delete s | search s | load <aspell | kjb | lotr | sample> | inorder]");
+        System.out.println("[insert s | deleteNode s | search s | load <aspell | kjb | lotr | sample> | inorder]");
     }
 
     private static void demoString(Tree<String> tree) {
@@ -167,28 +179,34 @@ public class Main {
             );
             long start, end;
             for (int i = 0; i < numOfTests; i++) {
+                System.out.println("Testing insert...");
                 tree.resetCounters();
                 start = System.nanoTime();
                 tree.load("src/com/pawelrubin/data/" + fileName + ".txt");
                 end = System.nanoTime();
+                System.out.println("Testing insert...done");
 
                 fileWriter.append(String.valueOf((end - start) / NANO_TO_SEC)).append(";");
                 fileWriter.append(String.valueOf(tree.getCmp_count())).append(";");
                 fileWriter.append(String.valueOf(tree.getModifications())).append(";");
 
+                System.out.println("Testing search...");
                 tree.resetCounters();
                 start = System.nanoTime();
                 tree.searchLoaded("src/com/pawelrubin/data/" + fileName + ".txt");
                 end = System.nanoTime();
+                System.out.println("Testing search...done");
 
                 fileWriter.append(String.valueOf((end - start) / NANO_TO_SEC)).append(";");
                 fileWriter.append(String.valueOf(tree.getCmp_count())).append(";");
                 fileWriter.append(String.valueOf(tree.getModifications())).append(";");
 
+                System.out.println("Testing delete...");
                 tree.resetCounters();
                 start = System.nanoTime();
                 tree.unload("src/com/pawelrubin/data/" + fileName + ".txt");
                 end = System.nanoTime();
+                System.out.println("Testing delete...done");
 
                 fileWriter.append(String.valueOf((end - start) / NANO_TO_SEC)).append(";");
                 fileWriter.append(String.valueOf(tree.getCmp_count())).append(";");

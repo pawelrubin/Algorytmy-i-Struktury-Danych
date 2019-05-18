@@ -17,15 +17,15 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
     @Override
     public void delete(KeyType z) {
         Node<KeyType> toDelete = searchNode(root, z);
-        if (toDelete != null) delete(toDelete);
+        if (toDelete != null) deleteNode(toDelete);
     }
 
     @Override
     public void search(KeyType value) {
         if (searchNode(this.root, value) != null) {
-            System.out.println("1");
+//            System.out.println("1");
         } else {
-            System.out.println("0");
+//            System.out.println("0");
         }
     }
 
@@ -76,25 +76,6 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
         return z;
     }
 
-    private void inorderWalk(Node<KeyType> x) {
-        if (x == null) return;
-
-        Stack<Node<KeyType>> s = new Stack<>();
-        Node<KeyType> curr = x;
-        while (curr != null || s.size() > 0) {
-            while (curr != null) {
-                s.push(curr);
-                curr = curr.getLeft();
-            }
-
-            curr = s.pop();
-
-            System.out.println(curr);
-
-            curr = curr.getRight();
-        }
-    }
-
     protected Node<KeyType> transplant(Node<KeyType> u, Node<KeyType> v) {
         cmp_count++;
         if (u.getParent() == null) {
@@ -117,7 +98,7 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
         return v;
     }
 
-    protected Node<KeyType> delete(Node<KeyType> z) {
+    protected Node<KeyType> deleteNode(Node<KeyType> z) {
         cmp_count++;
         if (z.getLeft() == null) {
             return transplant(z, z.getRight());
@@ -148,8 +129,10 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
             cmp_count += 3;
             if (key.compareTo(node.getKey()) < 0) {
                 node = node.getLeft();
-            } else {
+            } else if (key.compareTo(node.getKey()) > 0) {
                 node = node.getRight();
+            } else {
+                return node;
             }
         }
         return node;
@@ -162,6 +145,25 @@ public class BST<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
             x = x.getLeft();
         }
         return x;
+    }
+
+    private void inorderWalk(Node<KeyType> x) {
+        if (x == null) return;
+
+        Stack<Node<KeyType>> s = new Stack<>();
+        Node<KeyType> curr = x;
+        while (curr != null || s.size() > 0) {
+            while (curr != null) {
+                s.push(curr);
+                curr = curr.getLeft();
+            }
+
+            curr = s.pop();
+
+            System.out.println(curr);
+
+            curr = curr.getRight();
+        }
     }
 
 }

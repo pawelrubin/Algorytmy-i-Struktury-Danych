@@ -31,15 +31,17 @@ public class SplayTree<KeyType extends Comparable<KeyType>> extends BST<KeyType>
     }
 
     @Override
-    protected Node<KeyType> delete(Node<KeyType> z) {
-        Node<KeyType> removed = super.delete(z);
+    protected Node<KeyType> deleteNode(Node<KeyType> z) {
+        Node<KeyType> removed = super.deleteNode(z);
         cmp_count++;
         if (removed != null) {
+//            System.out.println("removed: " + removed);
             cmp_count++;
             if (removed.getParent() != null) {
                 Node<KeyType> parent = removed.getParent();
                 cmp_count++;
                 while (parent.getParent() != null) {
+                    System.out.println("infinity");
                     cmp_count++;
                     this.splay(parent);
                 }
@@ -58,19 +60,29 @@ public class SplayTree<KeyType extends Comparable<KeyType>> extends BST<KeyType>
             if (parent == root) {
                 // Zig step
                 root = node;
+                modifications++;
                 node.setParent(null);
 
                 cmp_count++;
                 if (node == parent.getLeft()) {
+                    modifications++;
                     parent.setLeft(node.getRight());
                     cmp_count++;
-                    if (node.getRight() != null) node.getRight().setParent(parent);
+                    if (node.getRight() != null) {
+                        modifications++;
+                        node.getRight().setParent(parent);
+                    }
+                    modifications += 2;
                     node.setRight(parent);
                     parent.setParent(node);
                 } else {
+                    modifications++;
                     parent.setRight(node.getLeft());
                     cmp_count++;
-                    if (node.getLeft() != null) node.getLeft().setParent(parent);
+                    if (node.getLeft() != null) {
+                        modifications++;
+                        node.getLeft().setParent(parent);
+                    }
                     node.setLeft(parent);
                     parent.setParent(node);
                 }

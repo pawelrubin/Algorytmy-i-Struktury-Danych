@@ -9,8 +9,8 @@ import java.util.List;
 
 public abstract class Tree<KeyType extends Comparable<KeyType>> {
 
-    protected int cmp_count = 0;
-    protected int modifications = 0;
+    protected long cmp_count = 0;
+    protected long modifications = 0;
 
     public abstract void insert(KeyType value);
 
@@ -90,11 +90,11 @@ public abstract class Tree<KeyType extends Comparable<KeyType>> {
         this.modifications = 0;
     }
 
-    public int getModifications() {
+    public long getModifications() {
         return modifications;
     }
 
-    public int getCmp_count() {
+    public long getCmp_count() {
         return cmp_count;
     }
 }

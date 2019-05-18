@@ -13,7 +13,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
         cmp_count++;
         while (x != guard) {
             y = x;
-            cmp_count++;
+            cmp_count += 2;
             if (z.compareTo(x) < 0) {
                 x = x.getLeft();
             } else {
@@ -44,8 +44,8 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
     }
 
     @Override
-    public void delete(KeyType z) {
-        ColorNode<KeyType> toDelete = searchNode(root, z);
+    public void delete(KeyType value) {
+        ColorNode<KeyType> toDelete = searchNode(root, value);
         if (toDelete != guard ) deleteNode(toDelete);
     }
 
@@ -315,7 +315,7 @@ public class RBTree<KeyType extends Comparable<KeyType>> extends Tree<KeyType> {
         v.setParent(u.getParent());
     }
 
-    public ColorNode<KeyType> minimum(ColorNode<KeyType> x) {
+    private ColorNode<KeyType> minimum(ColorNode<KeyType> x) {
         cmp_count++;
         while (x.getLeft() != guard) {
             cmp_count++;
