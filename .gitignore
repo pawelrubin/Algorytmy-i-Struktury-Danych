@@ -6,4 +6,7 @@ Doxyfile
 **/cw
 **/pcg-c-basic-0.9
 **.csv
-**.xlsx
+# **.xlsx
+**.txt
+**.mod
+**.png
